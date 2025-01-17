@@ -1,14 +1,17 @@
 
-import { Middle_Navbar, ProfileHeader } from "../components/memorial";
+import { Middle_Navbar, ProfileHeader,Memorial_Navbar } from "../components/memorial";
 
 const Memorial: React.FC = () => {
   return (
-    <div>
+    <>
+    {/* Memorial Navbar  */}
+      <Memorial_Navbar />
+
       {/* Profile Header */}
       <ProfileHeader
         name="Juhudi Khamisi Lugo"
         years="1990 - 2024"
-        imageUrl="https://example.com/path-to-image.jpg"
+        imageUrl="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
       />
 
       {/* Navbar */}
@@ -21,7 +24,7 @@ const Memorial: React.FC = () => {
           This page is dedicated to the life and memories of Juhudi Khamisi Lugo.
         </p>
       </div>
-    </div>
+    </>
   );
 };
 
