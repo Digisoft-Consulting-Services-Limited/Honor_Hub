@@ -5,7 +5,10 @@ const Memorial: React.FC = () => {
   return (
     <>
     {/* Memorial Navbar  */}
-      <Memorial_Navbar />
+      <Memorial_Navbar 
+      name='sally'
+      imageUrl="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+      />
 
       {/* Profile Header */}
       <ProfileHeader

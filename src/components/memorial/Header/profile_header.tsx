@@ -16,7 +16,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ name, years, imageUrl }) 
 
     {/* Content */}
       
-    <div className="z-20 flex flex-col lg:items-start lg:text-center py-12 lg:py-0">
+    <div className="z-20 flex flex-col  lg:text-center py-6 ">
       <h1 className="text-4xl font-bold">{name}</h1>
       <p className="text-2xl mt-2">{years}</p>
     </div>
@@ -36,7 +36,8 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ name, years, imageUrl }) 
     </div>
         </div>
         </div>
-  </div>
+        </div>
+ 
 
 
 
