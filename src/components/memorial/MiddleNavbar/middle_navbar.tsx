@@ -1,32 +1,24 @@
+import { useState } from "react";
 
 const Middle_Navbar: React.FC = () => {
+  const [activeButton, setActiveButton] = useState<string>("TRIBUTE");
+
   return (
-    <nav className="bg-[#5a4036] text-white">
-      <div className="flex justify-center space-x-8 py-3">
-        <a
-          href="#about"
-          className="text-white font-medium hover:text-yellow-200 focus:text-yellow-300"
-        >
-          ABOUT
-        </a>
-        <a
-          href="#life"
-          className="text-white font-medium hover:text-yellow-200 focus:text-yellow-300"
-        >
-          LIFE
-        </a>
-        <a
-          href="#gallery"
-          className="text-white font-medium hover:text-yellow-200 focus:text-yellow-300"
-        >
-          GALLERY
-        </a>
-        <a
-          href="#stories"
-          className="text-white font-medium hover:text-yellow-200 focus:text-yellow-300"
-        >
-          STORIES
-        </a>
+    <nav className="bg-primary text-primary-light">
+      <div className="flex justify-center  space-x-8 py-3">
+        {["TRIBUTE", "LIFE", "GALLERY", "STORIES"].map((item) => (
+          <button
+            key={item}
+            onClick={() => setActiveButton(item)}
+            className={`p-2 rounded-md font-medium transition-all duration-200 ${
+              activeButton === item
+                ? "text-primary bg-primary-hover_light"
+                : "text-white hover:text-primary hover:bg-primary-hover_light hover:scale-105"
+            }`}
+          >
+            {item}
+          </button>
+        ))}
       </div>
     </nav>
   );

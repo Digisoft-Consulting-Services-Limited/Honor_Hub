@@ -31,50 +31,65 @@ const NavbarSidebar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
   return (
     <div className="relative">
       {/* Navbar */}
-      <nav className="bg-primary  text-primary-light flex justify-between items-center px-4 py-3 shadow-md">
-        <h1 className="text-xl font-bold">HonorHub</h1>
-        <button
-          className="flex flex-col gap-1.5 md:hidden"
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        >
-          <span className="w-6 h-1 bg-white rounded-sm"></span>
-          <span className="w-6 h-1 bg-white rounded-sm"></span>      
-          <span className="w-6 h-1 bg-white rounded-sm"></span>
-        </button>
-          {/* Dropdown */}
-          <div className="relative hidden md:block" ref={dropdownRef}>
-          <button
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="flex items-center gap-2 focus:outline-none  transition hover:text-gray-300 cursor-pointer "
-          ><FontAwesomeIcon className="" icon={faAngleDown} />
-            <span className="">Hello, Salome</span>
-          </button>
+      <nav className="bg-primary text-primary-light flex items-center justify-between px-4 py-3 shadow-md">
+  {/* Logo */}
+  <h1 className="text-xl  pl-9 font-bold">HonorHub</h1>
 
-          {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-primary-light_yellow text-black rounded shadow-lg z-50">
-              <ul className="py-1 text-sm">
-                <li className="px-4 py-2 hover:bg-primary-hover_light cursor-pointer">
-                  My Memorials
-                </li>
-                <li className="px-4 py-2 hover:bg-primary-hover_light cursor-pointer">
-                  Visited Memorials
-                </li>
-                <li className="px-4 py-2 hover:bg-primary-hover_light cursor-pointer">
-                  Account Information
-                </li>
-                <li className="px-4 py-2 hover:bg-primary-hover_light cursor-pointer border-t">
-                  Sign Out
-                </li>
-              </ul>
-            </div>
-          )}
+  {/* Hamburger button for mobile */}
+  <button
+    className="flex flex-col gap-1.5 md:hidden"
+    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+  >
+    <span className="w-6 h-1 bg-white rounded-sm"></span>
+    <span className="w-6 h-1 bg-white rounded-sm"></span>
+    <span className="w-6 h-1 bg-white rounded-sm"></span>
+  </button>
+
+  {/* Right-aligned navigation links */}
+  <div className="hidden md:flex items-center gap-6 pr-6"> {/* Hidden on mobile */}
+    <ul className="flex space-x-6">
+      <li className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow cursor-pointer">Create a New Website</li>
+      <li className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow cursor-pointer">Invite Others</li>
+      <li className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow cursor-pointer">Contact Support</li>
+    </ul>
+
+    {/* Dropdown for Hello, Salome */}
+    <div className="relative" ref={dropdownRef}>
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          className="flex items-center gap-2 focus:outline-none transition pr-2hover:underline hover:decoration-primary-light_yellow cursor-pointer"
+        >
+          <FontAwesomeIcon className="" icon={faAngleDown} />
+          <span className="hover:underline hover:decoration-primary-light_yellow">Hello, Salome</span>
+        </button>
+      </div>
+
+      {/* Dropdown menu */}
+      {isDropdownOpen && (
+        <div className="absolute right-0 mt-2 w-48 bg-primary-light_yellow text-black rounded shadow-lg z-50">
+          <ul className="py-1 text-sm">
+            <li className="px-4 py-2 hover:bg-primary-hover_light cursor-pointer">
+              My Memorials
+            </li>
+            <li className="px-4 py-2 hover:bg-primary-hover_light cursor-pointer">
+              Visited Memorials
+            </li>
+            <li className="px-4 py-2 hover:bg-primary-hover_light cursor-pointer">
+              Account Information
+            </li>
+            <li className="px-4 py-2 hover:bg-primary-hover_light cursor-pointer border-t">
+              Sign Out
+            </li>
+          </ul>
         </div>
-        <ul className="hidden md:flex space-x-6">
-          <li className="hover:text-gray-300 cursor-pointer">Create a New Website</li>
-          <li className="hover:text-gray-300 cursor-pointer">Invite Others</li>
-          <li className="hover:text-gray-300 cursor-pointer">Contact Support</li>
-        </ul>
-      </nav>
+      )}
+    </div>
+  </div>
+</nav>
+
+
+
 
       {/* Sidebar */}
       <div

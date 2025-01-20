@@ -18,8 +18,9 @@ const Memorial: React.FC = () => {
       />
 
       {/* Navbar */}
-      <Middle_Navbar />
-
+      <div className="lg:mt-0 md:mt-0 sm:mt-20">
+    <Middle_Navbar />
+  </div>
       {/* Memorial Content */}
       <div className="container mx-auto px-6 py-12">
         <h1 className="text-3xl font-bold text-center">Memorial Page</h1>
