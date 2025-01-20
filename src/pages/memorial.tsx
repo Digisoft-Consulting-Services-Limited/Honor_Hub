@@ -1,5 +1,5 @@
 
-import { Middle_Navbar, ProfileHeader,Memorial_Navbar } from "../components/memorial";
+import { Middle_Navbar, ProfileHeader,Memorial_Navbar } from "../components/Memorial";
 
 const Memorial: React.FC = () => {
   return (
