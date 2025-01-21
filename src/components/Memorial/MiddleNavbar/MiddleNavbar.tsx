@@ -1,11 +1,16 @@
-import { useState } from "react";
 
-const Middle_Navbar: React.FC = () => {
-  const [activeButton, setActiveButton] = useState<string>("TRIBUTE");
+interface MiddleNavbarProps {
+  activeButton: string;
+  setActiveButton: (button: string) => void;
+}
 
+const Middle_Navbar: React.FC<MiddleNavbarProps> = ({
+  activeButton,
+  setActiveButton,
+}) => {
   return (
     <nav className="bg-primary text-primary-light">
-      <div className="flex justify-center  space-x-8 py-3">
+      <div className="flex justify-center space-x-8 py-3">
         {["TRIBUTE", "LIFE", "GALLERY", "STORIES"].map((item) => (
           <button
             key={item}

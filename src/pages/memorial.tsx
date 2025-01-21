@@ -1,7 +1,26 @@
 
-import { Middle_Navbar, ProfileHeader,Memorial_Navbar } from "../components/Memorial";
+import { Middle_Navbar, ProfileHeader,Memorial_Navbar,Tribute,Story,Life,Gallery,SecondColumn } from "../components/Memorial";
+import { useState } from "react";
 
 const Memorial: React.FC = () => {
+  const [activeButton, setActiveButton] = useState<string>("TRIBUTE");
+
+  const renderPageContent = () => {
+    
+    switch(activeButton){
+      case "TRIBUTE":
+        return <Tribute/>
+      case "LIFE":
+        return <Life/>
+      case "GALLERY":
+        return <Gallery/>
+      case "STORIES":
+        return <Story/>
+      default:
+        return <Tribute/>
+    }
+
+  }
   return (
     <>
     {/* Memorial Navbar  */}
@@ -18,15 +37,17 @@ const Memorial: React.FC = () => {
       />
 
       {/* Navbar */}
-      <div className="lg:mt-0 md:mt-0 sm:mt-20">
-    <Middle_Navbar />
-  </div>
-      {/* Memorial Content */}
-      <div className="container mx-auto px-6 py-12">
-        <h1 className="text-3xl font-bold text-center">Memorial Page</h1>
-        <p className="text-lg text-center mt-4">
-          This page is dedicated to the life and memories of Juhudi Khamisi Lugo.
-        </p>
+      <div className="lg:mt-0 md:mt-20 sm:mt-20">
+        <Middle_Navbar 
+          activeButton={activeButton} 
+          setActiveButton={setActiveButton} 
+        />
+      </div>
+
+      {/* Conditional Memorial Content Based on Active Button */}
+      <div className="container mx-auto px-6 py-12 flex sm:flex-col">
+  {renderPageContent()}
+  <SecondColumn  />
       </div>
     </>
   );
