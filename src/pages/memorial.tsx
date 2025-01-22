@@ -1,56 +1,48 @@
-
-import { Middle_Navbar, ProfileHeader,Memorial_Navbar,Tribute,Story,Life,Gallery,SecondColumn } from "../components/Memorial";
-import { useState } from "react";
+// Memorial.tsx
+import { useMemorial } from '../context/memorial/memorialcontext';
+import { Middle_Navbar, ProfileHeader, Memorial_Navbar, Tribute, Story, Life, Gallery, SecondColumn, MemorialProgram, Hymns } from "../components/Memorial";
 
 const Memorial: React.FC = () => {
-  const [activeButton, setActiveButton] = useState<string>("TRIBUTE");
+  const { 
+    activeButton, 
+    profile, 
+    showFullHeader 
+  } = useMemorial();
 
   const renderPageContent = () => {
-    
-    switch(activeButton){
-      case "TRIBUTE":
-        return <Tribute/>
-      case "LIFE":
-        return <Life/>
-      case "GALLERY":
-        return <Gallery/>
-      case "STORIES":
-        return <Story/>
-      default:
-        return <Tribute/>
+    switch(activeButton) {
+      case "TRIBUTES": return <Tribute />;
+      case "LIFE": return <Life />;
+      case "GALLERY": return <Gallery />;
+      case "STORIES": return <Story />;
+      case "PROGRAM": return <MemorialProgram />;
+      case "HYMNS": return <Hymns />;
+      default: return <Tribute />;
     }
+  };
 
-  }
   return (
     <>
-    {/* Memorial Navbar  */}
       <Memorial_Navbar 
-      name='sally'
-      imageUrl="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        name='sally'
+        imageUrl={profile.imageUrl}
       />
 
-      {/* Profile Header */}
-      <ProfileHeader
-        name="Juhudi Khamisi Lugo"
-        years="1990 - 2024"
-        imageUrl="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      />
+      {showFullHeader && (
+        <ProfileHeader />
+      )}
 
-      {/* Navbar */}
       <div className="lg:mt-0 md:mt-20 sm:mt-20">
-        <Middle_Navbar 
-          activeButton={activeButton} 
-          setActiveButton={setActiveButton} 
-        />
+        <Middle_Navbar />
       </div>
 
-      {/* Conditional Memorial Content Based on Active Button */}
-      <div className="container mx-auto px-6 py-12 flex sm:flex-col">
-  {renderPageContent()}
-  <SecondColumn  />
+      <div className="container mx-auto px-6 py-12 flex">
+        {renderPageContent()}
+        <SecondColumn />
       </div>
     </>
   );
 };
 
-export default Memorial;
+
+export default Memorial

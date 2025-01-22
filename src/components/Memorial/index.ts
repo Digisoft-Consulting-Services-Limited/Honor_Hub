@@ -13,3 +13,5 @@ export { default as ViewsCard } from "./Sections/SecondColumn/ViewsCard";
 export { default as ShareOnFacebookCard } from "./Sections/SecondColumn/ShareOnFacebook";
 export { default as RecentUpdate} from "./Sections/SecondColumn/RecentUpdate";
 export { default as SecondColumn } from "./Sections/SecondColumn/SecondColumnSection";
+export { default as MemorialProgram } from "./Sections/Program/MemorialProgram";
+export { default as Hymns } from "./Sections/Hymns/Hymns"
