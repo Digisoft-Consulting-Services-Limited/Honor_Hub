@@ -1,33 +1,53 @@
-import { cardData } from "../../../../data/MemorialSectionData/LifeData";
-
+import { LifeData } from "../../../../data/MemorialSectionData/LifeData";
 
 const Life: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Life</h1>
-      <div className="space-y-6">
-        {cardData.map((item, index) => (
+      {/* Quote Section */}
+      <div className="text-center mb-10">
+        <h2 className="text-2xl font-semibold italic text-primary mb-6">
+          "{LifeData.description.quote}"
+        </h2>
+      </div>
+
+      {/* List Items */}
+      <div className="m-9">
+        <ul className="list-disc pl-8 mb-6">
+          {LifeData.description.listItems.map((item, index) => (
+            <li 
+              key={index} 
+              className="mb-2 leading-relaxed text-primary"
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+        
+        {/* Paragraph */}
+        <p className="text-primary leading-loose text-justify mt-4">
+          {LifeData.description.paragraph}
+        </p>
+      </div>
+
+      {/* Life Items Cards */}
+      <div className="space-y-6 mx-auto">
+        {LifeData.lifeItems.map((item, index) => (
           <div
             key={index}
-            className="bg-orange-100 p-6 rounded-lg shadow-md"
+            className="bg-primary-light p-6 rounded-lg shadow-md"
           >
             <h2 className="text-2xl font-bold text-primary mb-2">
               {item.title}
             </h2>
-            <p className="text-sm text-gray-500 mb-4">
+            <p className="text-sm text-primary-text_black mb-4">
               {item.date} • by {item.author}
             </p>
             <p className="text-gray-700 mb-4">{item.content}</p>
             <div className="flex justify-between items-center">
-              <a
-                href="#"
-                className="text-blue-500 hover:underline"
-              >
+              <a href="#" className="text-blue-500 hover:underline">
                 Read more
               </a>
-              <button
-                className="text-gray-500 hover:text-gray-700 flex items-center"
-              >
+              <button className="text-gray-500 hover:text-gray-700 flex items-center">
                 <svg
                   className="h-5 w-5 mr-1"
                   fill="currentColor"

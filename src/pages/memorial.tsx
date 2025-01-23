@@ -1,6 +1,6 @@
 // Memorial.tsx
 import { useMemorial } from '../context/memorial/memorialcontext';
-import { Middle_Navbar, ProfileHeader, Memorial_Navbar, Tribute, Story, Life, Gallery, SecondColumn, MemorialProgram, Hymns } from "../components/Memorial";
+import { Middle_Navbar, ProfileHeader, Memorial_Navbar, Tribute, Story, Life, Gallery, MemorialProgram, Hymns } from "../components/Memorial";
 
 const Memorial: React.FC = () => {
   const { 
@@ -32,13 +32,13 @@ const Memorial: React.FC = () => {
         <ProfileHeader />
       )}
 
-      <div className="lg:mt-0 md:mt-20 sm:mt-20">
+      <div className="">
         <Middle_Navbar />
       </div>
 
       <div className="container mx-auto px-6 py-12 flex">
         {renderPageContent()}
-        <SecondColumn />
+        {/* <SecondColumn /> */}
       </div>
     </>
   );
