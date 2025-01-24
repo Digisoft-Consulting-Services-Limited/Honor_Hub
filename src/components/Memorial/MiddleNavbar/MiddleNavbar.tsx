@@ -36,7 +36,7 @@ const Middle_Navbar: React.FC = () => {
         </div>
       ) : (
         <div className="flex justify-center space-x-8 py-3">
-          {["LIFE","PROGRAM", "TRIBUTES","HYMNS","GALLERY", "STORIES"].map((item) => (
+          {["LIFE","PROGRAM", "TRIBUTES","HYMNS"].map((item) => (
             <button
               key={item}
               onClick={() => setActiveButton(item)}

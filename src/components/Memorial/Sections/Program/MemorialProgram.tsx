@@ -1,81 +1,45 @@
-
-interface ProgramMemorialProps {
-  time: string;
-  title: string;
-  description: string;
-}
-
-const ProgramItem: React.FC<ProgramMemorialProps> = ({ time, title, description }) => (
-  <div className="flex gap-6 border-b border-[#FBEAE0] pb-4 last:border-b-0">
-    <div className="text-right text-lg font-semibold text-primary min-w-[70px]">{time}</div>
-    <div>
-      <h3 className="text-lg font-medium text-primary">{title}</h3>
-      {description && (
-        <p className="text-sm text-gray-700 mt-1">
-          {description}
-        </p>
-      )}
-    </div>
-  </div>
-);
+// components/MemorialProgram.tsx
+import { programData } from "../../../../data/MemorialSectionData/Program";  // Import your data
 
 const MemorialProgram: React.FC = () => {
-  const programData = [
-    { time: '5:30 AM', title: 'Departure Kiamumbi', description: '' },
-    { time: '6:30 AM', title: 'Viewing of the Body', description: 'At Chiromo Funeral Parlour' },
-    { time: '6:50 AM', title: 'Prayers', description: 'Brief service before departure' },
-    { time: '7:00 AM', title: 'Departure Chiromo', description: 'Journey to Laikipia' },
-    { time: '10:30 AM', title: 'Arrival Laikipia University', description: 'Short break and refreshments' },
-    { time: '11:00 AM', title: 'Arrival at Home', description: 'Final journey home' },
-    { time: '11:15 AM', title: 'Welcome and Opening Prayers', description: 'Led by Reverend Mwangi' },
-    {
-      time: '11:30 AM',
-      title: 'Photo Session',
-      description: 'Family groups: Parents, Children, Brothers, Sisters, Grandparents, Relatives, Friends',
-    },
-    {
-      time: '12:00 PM',
-      title: 'Speeches',
-      description: "Local Administration, Family Representatives (Dad's and Mum's), Friends and Neighbors",
-    },
-    {
-      time: '1:00 PM',
-      title: 'Lunch',
-      description: 'Buffet lunch for all guests',
-    },
-    {
-      time: '2:00 PM',
-      title: 'Eulogies',
-      description: 'Reading of tributes from family, friends, and colleagues',
-    },
-    {
-      time: '3:30 PM',
-      title: 'Thanksgiving Service',
-      description: 'Conducted by Pastor Wanjiru',
-    },
-    {
-      time: '4:00 PM',
-      title: 'Final Resting Ceremony',
-      description: 'Laying the body to rest at the family home',
-    },
-  ];
-
   return (
-    <div className="max-w-4xl mx-auto bg-primary-hover_light rounded-lg shadow-lg p-8 mt-10">
-      <h1 className="text-4xl font-bold text-center text-[#774936]">
+    <div className=" mx-auto px-4 py-8   bg-primary-light rounded-lg shadow-md">
+      <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
         Memorial Program
-      </h1>
-      <h2 className="text-lg text-gray-700 text-center mt-2">
-        Wednesday, 15th August 2018
       </h2>
-      <div className="mt-8 space-y-6">
-        {programData.map((item, index) => (
-          <ProgramItem
+      
+      <div className="relative">
+        {/* Timeline line */}
+        <div className="absolute left-4 top-0 w-1 h-full  bg-primary-light transform -translate-x-1/2"></div>
+
+        {programData.map((event, index) => (  // Type is inferred from programData's type
+          <div 
             key={index}
-            time={item.time}
-            title={item.title}
-            description={item.description}
-          />
+            className="relative pl-16 mb-8 last:mb-0 group"
+          >
+            {/* Timeline dot */}
+            <div className="absolute left-0 top-2 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-medium">
+              {index + 1}
+            </div>
+
+            {/* Event content */}
+            <div className="bg-primary-hover_light  p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border-l-4 border-primary">
+              <div className="flex items-center gap-4 mb-2">
+                <span className="text-lg font-semibold text-gray-700">
+                  {event.time}
+                </span>
+                <h3 className="text-xl font-semibold text-gray-800">
+                  {event.title}
+                </h3>
+              </div>
+              
+              {event.description && (
+                <p className="text-gray-600 pl-2 border-l-2 border-gray-200 ml-4">
+                  {event.description}
+                </p>
+              )}
+            </div>
+          </div>
         ))}
       </div>
     </div>
