@@ -15,3 +15,4 @@ export { default as RecentUpdate} from "./Sections/SecondColumn/RecentUpdate";
 export { default as SecondColumn } from "./Sections/SecondColumn/SecondColumnSection";
 export { default as MemorialProgram } from "./Sections/Program/MemorialProgram";
 export { default as Hymns } from "./Sections/Hymns/Hymns"
+export { default as AddTributeEditor } from "./Sections/About Tributes/AddTribute";

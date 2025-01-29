@@ -3,14 +3,14 @@ import { hymnsData } from "../../../../data/MemorialSectionData/HymnData";
 
 const Hymns: React.FC = () => {
   return (
-    <div className="max-w-4xl mx-auto bg-[#FBEAE0] rounded-lg shadow-lg p-8 mt-10">
+    <div className="mx-auto px-10 py-8   bg-primary-light rounded-lg shadow-md">
       <h1 className="text-4xl font-bold text-center text-[#774936]">
         Hymns Collection
       </h1>
       <h2 className="text-lg text-gray-700 text-center mt-2">
         A Selection of Favorite Hymns
       </h2>
-      <div className="mt-8 space-y-8">
+      <div className="space-y-6 mx-auto">
         {hymnsData.map((hymn) => (
           <div
             key={hymn.number}
