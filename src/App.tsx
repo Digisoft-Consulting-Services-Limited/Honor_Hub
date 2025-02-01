@@ -1,13 +1,14 @@
-import  { MemorialProvider } from './context/memorial/memorialcontext'
 import './App.css'
-import Memorial from './pages/memorial'
+import PagesRoute from './routes/pagesroute'
+import MemorialRoute from './routes/memorialroute'
 
 function App() {
 
   return (
-    <MemorialProvider>
-      <Memorial/>
-    </MemorialProvider>
+    <div>
+      <PagesRoute />
+      <MemorialRoute />
+    </div>
   )
 }
 
