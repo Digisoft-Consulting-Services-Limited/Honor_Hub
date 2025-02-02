@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Memorial from '../pages/memorial'
-import { MemorialProvider } from '../context/memorial/memorialcontext'
+import Memorial from '../pages/MemorialPage'
+import { MemorialProvider } from '@/context/memorial/MemorialContext'
 
 const PagesRoute: React.FC = () => {
     return (

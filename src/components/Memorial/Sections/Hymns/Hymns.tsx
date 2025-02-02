@@ -1,5 +1,5 @@
 
-import { hymnsData } from "../../../../data/MemorialSectionData/HymnData";
+import { hymnsData } from "@/data/MemorialSectionData/HymnData";
 
 const Hymns: React.FC = () => {
   return (

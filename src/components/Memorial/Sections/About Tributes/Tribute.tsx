@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TributeData } from "../../../../data/MemorialSectionData/Tribute";
+import { TributeData } from "@/data/MemorialSectionData/Tribute";
 import AddTributeEditor from './AddTribute'; // Import the modal component
 
 const Tribute: React.FC = () => {

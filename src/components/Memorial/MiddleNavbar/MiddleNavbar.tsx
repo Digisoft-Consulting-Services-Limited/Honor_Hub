@@ -1,5 +1,5 @@
 // Middle_Navbar.tsx
-import { useMemorial } from '../../../context/memorial/memorialcontext';
+import { useMemorial } from '@/context/memorial/MemorialContext';
 
 const Middle_Navbar: React.FC = () => {
   const { 

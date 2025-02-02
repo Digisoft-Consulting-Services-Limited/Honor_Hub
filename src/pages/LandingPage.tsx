@@ -1,15 +1,18 @@
 import { HeartIcon,  } from "@heroicons/react/24/outline";
+import Footer from "@/components/global/footer";
+import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
+  const navigate = useNavigate()
   return (
-    <div className="min-h-screen bg-#ececec">
+    <div className="bg-#ececec">
       {/* Navigation - Improved mobile responsiveness */}
       <nav className="bg-primary-light_yellow shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
           <h1 className="text-xl sm:text-2xl font-semibold black">HonorHub</h1>
           <div className="w-full sm:w-auto flex justify-center">
-            <button className="p-2 border-4 border-primary-hover_light hover:bg-primary-hover_light p-2 sm:p-3 rounded-lg text-sm sm:text-base text-primary-light hover:text-blackt bg-primary w-full sm:w-auto">
-            Login
+            <button className="p-2 border-4 border-primary-hover_light hover:bg-primary-hover_light p-2 sm:p-3 rounded-lg text-sm sm:text-base text-primary-light hover:text-black bg-primary w-full sm:w-auto">
+            Get Started
             </button>
           </div>
         </div>
@@ -31,8 +34,10 @@ export default function LandingPage() {
         Post tributes and hymns for your loved ones in a dedicated space that 
         preserves memories with dignity and love.
       </p>
-      <button className="bg-primary border-4 border-primary-hover_light text-white px-6 py-2 sm:px-8 sm:py-3 rounded-lg hover:bg-primary-hover_light hover:text-black transition-colors text-sm sm:text-base">
-            Start Memorial
+      <button className="bg-primary border-4 border-primary-hover_light text-white px-6 py-2 sm:px-8 sm:py-3 rounded-lg hover:bg-primary-hover_light hover:text-black transition-colors text-sm sm:text-base " onClick={() =>{
+        navigate('/home')
+      }}>
+            View Memorials
           </button>
     </div>
 
@@ -40,9 +45,9 @@ export default function LandingPage() {
     <div className="flex-1 relative">
       <div className="relative">
         {/* Base Image */}
-        <div className="relative aspect-square rounded-xl overflow-hidden shadow-xl">
+        <div className="relative  rounded-xl overflow-hidden shadow-2xl">
           <img 
-            src="/../../public/img/yellow image.jpg" 
+            src="/../../public/img/sun.jpg" 
             alt="Memorial example"
             className="w-full h-full object-cover"
           />
@@ -51,11 +56,11 @@ export default function LandingPage() {
         </div>
 
         {/* Overlay Image */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-5/6 transform rotate-1 -mt-6">
+        <div className="absolute inset-0 rotate-3 flex items-center justify-center">
+          <div className="w-6/7 transform rotate-1 -mt-6">
             <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl">
               <img
-                src="/../../public/img/memorial.png"
+                src="/public/img/memorial.png"
                 alt="Candle memorial"
                 className="w-full h-full object-cover"
               />
@@ -93,43 +98,7 @@ export default function LandingPage() {
       </div>
 
       {/* Footer - Responsive grid */}
-      <footer className="bg-slate-800 text-slate-200">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          <div className="text-center sm:text-left">
-            <h4 className="text-lg font-semibold mb-3 sm:mb-4">HonorHub</h4>
-            <p className="text-xs sm:text-sm">Preserving memories with dignity and care</p>
-          </div>
-          
-          <div className="text-center sm:text-left">
-            <h4 className="text-lg font-semibold mb-3 sm:mb-4">Resources</h4>
-            <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
-              <li><a href="#" className="hover:text-blue-400 block">FAQ</a></li>
-              <li><a href="#" className="hover:text-blue-400 block">Support</a></li>
-              <li><a href="#" className="hover:text-blue-400 block">Contact</a></li>
-            </ul>
-          </div>
-
-          <div className="text-center sm:text-left">
-            <h4 className="text-lg font-semibold mb-3 sm:mb-4">Legal</h4>
-            <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
-              <li><a href="#" className="hover:text-blue-400 block">Privacy</a></li>
-              <li><a href="#" className="hover:text-blue-400 block">Terms</a></li>
-            </ul>
-          </div>
-
-          <div className="text-center sm:text-left">
-            <h4 className="text-lg font-semibold mb-3 sm:mb-4">Social</h4>
-            <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
-              <li><a href="#" className="hover:text-blue-400 block">Facebook</a></li>
-              <li><a href="#" className="hover:text-blue-400 block">Twitter</a></li>
-            </ul>
-          </div>
-        </div>
-        
-        <div className="border-t border-slate-700 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-xs sm:text-sm">
-          <p>© 2023 HonorHub. All rights reserved.</p>
-        </div>
-      </footer>
+ <Footer />
     </div>
   );
 }

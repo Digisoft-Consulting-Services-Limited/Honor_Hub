@@ -1,5 +1,5 @@
 // ProfileHeader.tsx
-import { useMemorial } from '../../../context/memorial/memorialcontext';
+import { useMemorial } from '@/context/memorial/MemorialContext';
 
 const ProfileHeader: React.FC = () => {
   const { profile } = useMemorial();

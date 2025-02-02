@@ -1,4 +1,4 @@
-import { LifeData } from "../../../../data/MemorialSectionData/LifeData";
+import { LifeData } from "@/data/MemorialSectionData/LifeData";
 
 const Life: React.FC = () => {
   return (

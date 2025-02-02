@@ -1,6 +1,16 @@
 // Memorial.tsx
-import { useMemorial } from '../context/memorial/memorialcontext';
-import { Middle_Navbar, ProfileHeader, Memorial_Navbar, Tribute, Story, Life, Gallery, MemorialProgram, Hymns } from "../components/Memorial";
+import  { useMemorial }  from '@/context/memorial/MemorialContext';
+import  Middle_Navbar from '@/components/Memorial/MiddleNavbar/MiddleNavbar';
+import ProfileHeader from '@/components/Memorial/Header/profile_header';
+import Memorial_Navbar from '@/components/Memorial/Header/memorial_navbar';
+import Tribute from '@/components/Memorial/Sections/About Tributes/Tribute';
+import Life from '@/components/Memorial/Sections/Life/Life';
+import Gallery from '@/components/Memorial/Sections/Gallery/Gallery';
+import Story from '@/components/Memorial/Sections/Stories/Story';
+import MemorialProgram from '@/components/Memorial/Sections/Program/MemorialProgram';
+import Hymns from '@/components/Memorial/Sections/Hymns/Hymns';
+
+
 
 const Memorial: React.FC = () => {
   const { 

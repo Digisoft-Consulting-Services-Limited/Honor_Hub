@@ -1,4 +1,5 @@
-import { Memorial_Navbar } from "../components/Memorial";
+import Footer from "@/components/global/footer";
+import  Memorial_Navbar  from "@/components/Memorial/Header/memorial_navbar";
 const HomePage: React.FC = () => {
   const recentMemorials = [
     {
@@ -28,7 +29,7 @@ const HomePage: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white font-sans">
       <Memorial_Navbar 
         name='sally'
-        image='https://via.placeholder.com/150'
+        imageUrl='https://via.placeholder.com/150'
       />
       {/* Hero Section */}
       <div className="bg-gray-800 py-20">
@@ -76,12 +77,7 @@ const HomePage: React.FC = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-900 py-8">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-gray-300">&copy; 2025 Memorial App. All rights reserved.</p>
-          <p className="text-gray-300">Contact us at <a href="mailto:info@memorialapp.com" className="text-blue-500">info@memorialapp.com</a></p>
-        </div>
-      </footer>
+     <Footer/> 
     </div>
   );
 };

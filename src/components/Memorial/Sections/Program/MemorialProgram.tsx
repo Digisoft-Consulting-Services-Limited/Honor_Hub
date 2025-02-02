@@ -1,5 +1,5 @@
 // components/MemorialProgram.tsx
-import { programData } from "../../../../data/MemorialSectionData/Program";  // Import your data
+import { programData } from "@/data/MemorialSectionData/Program";  // Import your data
 
 const MemorialProgram: React.FC = () => {
   return (
