@@ -11,7 +11,9 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
           <h1 className="text-xl sm:text-2xl font-semibold black">HonorHub</h1>
           <div className="w-full sm:w-auto flex justify-center">
-            <button className="p-2 border-4 border-primary-hover_light hover:bg-primary-hover_light p-2 sm:p-3 rounded-lg text-sm sm:text-base text-primary-light hover:text-black bg-primary w-full sm:w-auto">
+            <button onClick={() =>{
+              navigate('/login')
+            }} className="p-2 border-4 border-primary-hover_light hover:bg-primary-hover_light p-2 sm:p-3 rounded-lg text-sm sm:text-base text-primary-light hover:text-black bg-primary w-full sm:w-auto">
             Get Started
             </button>
           </div>
@@ -42,12 +44,12 @@ export default function LandingPage() {
     </div>
 
     {/* Image Stack Section */}
-    <div className="flex-1 relative">
-      <div className="relative">
+    <div className="flex-1 relative p-6">
+      <div className="relative ">
         {/* Base Image */}
         <div className="relative  rounded-xl overflow-hidden shadow-2xl">
           <img 
-            src="/../../public/img/sun.jpg" 
+            src="/img/sun.jpg" 
             alt="Memorial example"
             className="w-full h-full object-cover"
           />
@@ -60,7 +62,7 @@ export default function LandingPage() {
           <div className="w-6/7 transform rotate-1 -mt-6">
             <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl">
               <img
-                src="/public/img/memorial.png"
+                src="/img/memorial.png"
                 alt="Candle memorial"
                 className="w-full h-full object-cover"
               />

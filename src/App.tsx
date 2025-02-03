@@ -1,6 +1,7 @@
 import './App.css'
-import PagesRoute from './routes/pagesroute'
-import MemorialRoute from './routes/memorialroute'
+import PagesRoute from './routes/PagesRoute'
+import MemorialRoute from './routes/MemorialRoute'
+import AuthRoutes from './routes/AuthRoutes'
 
 function App() {
 
@@ -8,6 +9,7 @@ function App() {
     <div>
       <PagesRoute />
       <MemorialRoute />
+      <AuthRoutes/>
     </div>
   )
 }
