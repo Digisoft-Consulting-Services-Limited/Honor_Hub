@@ -1,18 +1,14 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-// import LandingPage from '../pages/homepage'
-import LandingPage from '../pages/LandingPage'
-import HomePage from '../pages/HomePage';
-
+import {  Routes, Route } from 'react-router-dom'
+import Memorial from '../pages/MemorialPage'
+import { MemorialProvider } from '@/context/memorial/MemorialContext'
 
 const MemorialRoute: React.FC = () => {
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/home" element={<HomePage />} />
-
-            </Routes>
-        </Router>
+            <MemorialProvider>
+                <Routes>
+                    <Route path="memorial" element={<Memorial />} />
+                </Routes>
+           </MemorialProvider>
     )
 }
 
