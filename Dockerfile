@@ -5,6 +5,7 @@ WORKDIR /app
 # Copy package files first to optimize layer caching
 COPY package.json package-lock.json* ./
 RUN npm ci 
+
 # Copy source code and build
 COPY . .
 RUN npm run build  # Generates static files in /app/dist
@@ -19,8 +20,8 @@ RUN npm install -g serve
 # Copy built assets from builder stage
 COPY --from=builder /app/dist ./dist
 
-# Expose port 3000 (or any port you prefer)
-EXPOSE 5173
+# Expose the correct port (Cloud Run uses 8080)
+EXPOSE 8080
 
-# Start the server to serve the built static files
-CMD ["serve", "-s", "dist", "-l", "5173"]
+# Use the PORT environment variable
+CMD ["serve", "-s", "dist", "-l", "$PORT"]
