@@ -8,13 +8,13 @@ RUN npm ci
 
 # Copy source code and build
 COPY . .
-RUN npm run build  # Generates static files in /app/dist
+RUN npm run build
 
 # Stage 2: Serve the app with a lightweight Node-based static server
 FROM node:20-alpine AS runner
 WORKDIR /app
 
-# Install "serve" globally to serve static files
+# Install serve globally to serve static files
 RUN npm install -g serve
 
 # Copy built assets from builder stage
@@ -23,5 +23,6 @@ COPY --from=builder /app/dist ./dist
 # Expose the correct port (Cloud Run uses 8080)
 EXPOSE 8080
 
-# Use the PORT environment variable
-CMD ["serve", "-s", "dist", "-l", "$PORT"]
+# Use shell form to enable environment variable substitution
+# Bind to 0.0.0.0 for Cloud Run compatibility
+CMD serve -s dist -l tcp://0.0.0.0:$PORT
