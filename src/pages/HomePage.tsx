@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import Footer from "@/components/global/footer";
 import Homepage_Navbar from "@/components/home/homepage_navbar";
-
+import { useNavigate } from "react-router-dom";
 const HomePage: React.FC = () => {
+  const navigate = useNavigate()
   const recentMemorials = [
     {
       id: 1,
@@ -57,6 +58,7 @@ const HomePage: React.FC = () => {
                
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={()=>{navigate('/memorial/create')}}
               >
                 Create Memorial
               </motion.button>
