@@ -1,12 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket,faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 interface AccountImageProps {
   name: string;
   imageUrl: string;
 }
 const Homepage_Navbar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
+  const navigate = useNavigate();
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -33,7 +36,8 @@ const Homepage_Navbar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
       {/* Navbar */}
       <nav className="bg-primary text-primary-light flex items-center justify-between px-4 py-3 shadow-md">
   {/* Logo */}
-  <h1 className="text-xl  pl-9 font-bold">HonorHub</h1>
+  <h1 className="text-xl  pl-9 font-bold" onClick={() => navigate('/home')}
+  >HonorHub</h1>
 
   {/* Hamburger button for mobile */}
   <button
