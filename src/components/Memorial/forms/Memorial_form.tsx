@@ -31,19 +31,19 @@ const relationships: RelationshipType[] = [
     "Child", "Daughter", "Daughter-in-law", "Father", "Father-in-law", "Friend",
     "Fiancé", "Girlfriend", "Grandfather", "Grandmother", "Grandchild",
     "Husband", "Mother", "Mother-in-law", "Parent", "Sibling", "Spouse"
-].sort();
+]
 
 const MemorialForm = () => {
-    const { register, handleSubmit, watch,setError, } = useForm<FormValues>();
+    const { register, handleSubmit } = useForm<FormValues>();
     const [selectedPlan, setSelectedPlan] = useState('');
     const [privacySetting, setPrivacySetting] = useState('public');
 
     const onSubmit: SubmitHandler<FormValues> = data => console.log(data);
 
     // Generate memorial URL
-    const firstName = watch('firstName') || 'lisa';
-    const lastName = watch('lastName') || 'luu';
-    const memorialUrl = `https://${firstName.toLowerCase()}-${lastName.toLowerCase()}.forevermissed.com`;
+    // const firstName = watch('firstName') || 'lisa';
+    // const lastName = watch('lastName') || 'luu';
+    // // const memorialUrl = `https://${firstName.toLowerCase()}-${lastName.toLowerCase()}.forevermissed.com`;
 
     return (
         <>
