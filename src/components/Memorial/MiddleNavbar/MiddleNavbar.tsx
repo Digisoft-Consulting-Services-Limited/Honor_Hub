@@ -6,9 +6,10 @@ const Middle_Navbar: React.FC = () => {
     activeButton, 
     setActiveButton, 
     isMobileView, 
-    profile, 
+    // currentMemorial, 
     setShowFullHeader 
   } = useMemorial();
+
 
   const handleBack = () => {
     setActiveButton("LIFE");
@@ -26,8 +27,10 @@ const Middle_Navbar: React.FC = () => {
           </button>
           <div className="flex items-center">
             <img 
-              src={profile.imageUrl} 
-              alt={profile.name} 
+              // src={currentMemorial.imageUrl} 
+              // alt={currentMemorial.name} 
+              src="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg" 
+              alt=""
               className="w-8 h-8 rounded-full object-cover mr-2 border-2 border-white"
             />
             <span className="text-white font-medium">{activeButton}</span>
