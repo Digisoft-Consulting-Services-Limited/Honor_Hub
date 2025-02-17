@@ -13,6 +13,7 @@ function App() {
         {/* Nested routes for memorial features */}
         <Route path="/memorial/*" element={<MemorialRoute />} />
 
+
         {/* Nested routes for auth */}
         <Route path="/auth/*" element={<AuthRoutes />} />
       </Routes>

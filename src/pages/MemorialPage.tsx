@@ -9,15 +9,42 @@ import Gallery from '@/components/Memorial/Sections/Gallery/Gallery';
 import Story from '@/components/Memorial/Sections/Stories/Story';
 import MemorialProgram from '@/components/Memorial/Sections/Program/MemorialProgram';
 import Hymns from '@/components/Memorial/Sections/Hymns/Hymns';
+import { useEffect  } from 'react';
+import { useParams } from "react-router-dom";
 
 
 
 const Memorial: React.FC = () => {
+  const { slug } = useParams<{ slug: string }>(); // Get slug from URL
+  console.log("Params object:", slug); // Debugging
+
+
+    
+
   const { 
     activeButton, 
-    profile, 
-    showFullHeader 
+    currentMemorial, 
+    isLoading,
+    showFullHeader,
+    loadMemorial
   } = useMemorial();
+
+  
+  useEffect(() => {
+    if (slug) {
+        console.log("Loading memorial for slug:", slug);
+        loadMemorial(slug);
+    }
+}, [slug, loadMemorial]);
+  
+if (isLoading) return <p className="text-center text-lg text-gray-600">Loading memorial...</p>;
+
+if (!currentMemorial) return (
+  <p className="text-center text-lg text-red-500">
+    Memorial not found. Please check the URL or try again later.
+  </p>
+);
+
 
   const renderPageContent = () => {
     switch(activeButton) {
@@ -30,12 +57,12 @@ const Memorial: React.FC = () => {
       default: return <Tribute />;
     }
   };
-
+  
   return (
     <>
       <Memorial_Navbar 
         name='sally'
-        imageUrl={profile.imageUrl}
+        imageUrl="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg"
       />
 
       {showFullHeader && (
@@ -56,3 +83,7 @@ const Memorial: React.FC = () => {
 
 
 export default Memorial
+
+
+
+
