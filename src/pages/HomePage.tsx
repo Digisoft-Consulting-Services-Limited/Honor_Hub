@@ -47,6 +47,49 @@ const HomePage: React.FC = () => {
         </div>
       </div>
 
+
+
+      <div className="container mx-auto px-4 py-24">
+        <motion.h2 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-4xl font-bold text-center mb-16 text-primary"
+        >
+          What We Offer
+        </motion.h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            {
+              title: "Create Memorials",
+              description: "Easily create beautiful memorial pages for your loved ones.",
+              icon: "🌟"
+            },
+            {
+              title: "Share Memories",
+              description: "Invite friends and family to share stories .",
+              icon: "💝"
+            },
+            {
+              title: "Forever Accessible",
+              description: "Keep memories alive with a permanent online presence.",
+              icon: "✨"
+            }
+          ].map((feature, index) => (
+            <div
+              key={index}
+            
+              className="bg-gradient-to-br from-primary/50 to-primary/50 p-8 rounded-2xl backdrop-blur-sm border border-[#5b3926]/10 hover:border-[#5b3926]/20 transition-all duration-300 hover:shadow-2xl hover:shadow-[#5b3926]/10>"
+              
+            >
+              <div className="text-4xl mb-4">{feature.icon}</div>
+              <h3 className="text-2xl font-semibold mb-4 text-primary">{feature.title}</h3>
+              <p className="text-primary">{feature.description}</p>
+            </div>
+          ))}
+        
+      </div>
+      </div>
       {/* Recent Memorials Section */}
       <div className="container mx-auto px-4 py-24">
         <motion.h2 
