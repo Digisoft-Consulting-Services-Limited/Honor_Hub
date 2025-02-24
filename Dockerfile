@@ -9,7 +9,8 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-
+# Build the application
+RUN npm run build
 
 # Stage 2: Serve the app with a lightweight static server
 FROM node:20-alpine AS runner
@@ -26,5 +27,3 @@ EXPOSE 8080
 
 # Serve the static files
 CMD serve -s dist -l tcp://0.0.0.0:$PORT
-# CMD ["serve", "-s", "dist", "-l", "tcp://0.0.0.0:8080"]
-
