@@ -42,7 +42,7 @@ export default function LandingPage() {
               onClick={() => {
                 navigate('/auth-test');
               }}
-              className="p-2 border-4 border-primary-hover_light hover:bg-primary-hover_light p-2 sm:p-3 rounded-lg text-sm sm:text-base text-primary-light hover:text-black bg-primary w-full sm:w-auto"
+              className=" border-4 border-primary-hover_light hover:bg-primary-hover_light p-2 sm:p-3 rounded-lg text-sm sm:text-base text-primary-light hover:text-black bg-primary w-full sm:w-auto"
             >
               Get Started
             </button>
