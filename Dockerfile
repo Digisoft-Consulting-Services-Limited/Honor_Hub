@@ -9,18 +9,7 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Set build-time environment variables
-ARG VITE_API_KEY
-ARG VITE_APP_SECRET
-ARG VITE_BASE_URL
-ARG VITE_BASE_URL_VERSION
 
-# Build the project with the environment variables
-RUN VITE_API_KEY=$VITE_API_KEY \
-    VITE_APP_SECRET=$VITE_APP_SECRET \
-    VITE_BASE_URL=$VITE_BASE_URL \
-    VITE_BASE_URL_VERSION=$VITE_BASE_URL_VERSION \
-    npm run build
 
 # Stage 2: Serve the app with a lightweight static server
 FROM node:20-alpine AS runner
@@ -36,4 +25,6 @@ COPY --from=builder /app/dist ./dist
 EXPOSE 8080
 
 # Serve the static files
-CMD serve -s dist -l tcp://0.0.0.0:$PORT
+# CMD serve -s dist -l tcp://0.0.0.0:$PORT
+CMD ["serve", "-s", "dist", "-l", "tcp://0.0.0.0:8080"]
+
