@@ -9,6 +9,18 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+# Pass environment variables at build time
+ARG VITE_API_KEY
+ARG VITE_APP_SECRET
+ARG VITE_BASE_URL
+ARG VITE_BASE_URL_VERSION
+
+# Inject variables into the build process
+ENV VITE_API_KEY=$VITE_API_KEY
+ENV VITE_APP_SECRET=$VITE_APP_SECRET
+ENV VITE_BASE_URL=$VITE_BASE_URL
+ENV VITE_BASE_URL_VERSION=$VITE_BASE_URL_VERSION
+
 # Build the application
 RUN npm run build
 
