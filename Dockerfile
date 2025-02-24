@@ -25,6 +25,6 @@ COPY --from=builder /app/dist ./dist
 EXPOSE 8080
 
 # Serve the static files
-# CMD serve -s dist -l tcp://0.0.0.0:$PORT
-CMD ["serve", "-s", "dist", "-l", "tcp://0.0.0.0:8080"]
+CMD serve -s dist -l tcp://0.0.0.0:$PORT
+# CMD ["serve", "-s", "dist", "-l", "tcp://0.0.0.0:8080"]
 
