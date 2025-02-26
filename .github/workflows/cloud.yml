@@ -21,6 +21,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v2
         with:
@@ -32,8 +35,11 @@ jobs:
           gcloud auth configure-docker us-central1-docker.pkg.dev
 
       - name: Build and Push Docker Image
+        env:
+            GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
         run: |
-          docker build \
+          IMAGE_NAME=$IMAGE_NAME
+          docker buildx build \
             --build-arg VITE_API_KEY=${{ secrets.VITE_API_KEY }} \
             --build-arg VITE_APP_SECRET=${{ secrets.VITE_APP_SECRET }} \
             --build-arg VITE_BASE_URL=${{ secrets.VITE_BASE_URL }} \
