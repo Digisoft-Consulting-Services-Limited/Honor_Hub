@@ -48,9 +48,10 @@ jobs:
             --build-arg VITE_APP_SECRET=${{ secrets.VITE_APP_SECRET }} \
             --build-arg VITE_BASE_URL=${{ secrets.VITE_BASE_URL }} \
             --build-arg VITE_BASE_URL_VERSION=${{ secrets.VITE_BASE_URL_VERSION }} \
-            -t $IMAGE_NAME:$GITHUB_SHA \
+            -t "$IMAGE_NAME:$GITHUB_SHA" \
             --push \
-            .
+            -f ./Dockerfile .
+
 
       - name: Deploy to Cloud Run
         env:
