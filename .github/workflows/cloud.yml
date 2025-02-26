@@ -20,6 +20,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Clean up Git configuration
+        run: |
+          git config --local --unset-all 'http.https://github.com/.extraheader' || :
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
