@@ -13,9 +13,10 @@ const AuthTest = () => {
     const testAuth = async () => {
       const API_KEY = env.API_KEY;
       const APP_SECRET = env.APP_SECRET;
+      
 
       // Check if environment variables are set
-      if (!API_KEY || !APP_SECRET) {
+      if (!API_KEY || !APP_SECRET ) {
         console.error("Missing API key or secret in environment variables.");
         setAuthStatus("Missing API key or secret");
         setIsLoading(false); // Stop loading

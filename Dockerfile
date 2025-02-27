@@ -21,6 +21,14 @@ ENV VITE_APP_SECRET=$VITE_APP_SECRET
 ENV VITE_BASE_URL=$VITE_BASE_URL
 ENV VITE_BASE_URL_VERSION=$VITE_BASE_URL_VERSION
 
+# Print environment variables for debugging during build
+RUN echo "Building with environment variables:" && \
+    echo "VITE_API_KEY present: $([ -n "$VITE_API_KEY" ] && echo 'yes' || echo 'no')" && \
+    echo "VITE_APP_SECRET present: $([ -n "$VITE_APP_SECRET" ] && echo 'yes' || echo 'no')" && \
+    echo "VITE_BASE_URL present: $([ -n "$VITE_BASE_URL" ] && echo 'yes' || echo 'no')" && \
+    echo "VITE_BASE_URL_VERSION present: $([ -n "$VITE_BASE_URL_VERSION" ] && echo 'yes' || echo 'no')"
+
+
 # Build the application
 RUN npm run build
 
