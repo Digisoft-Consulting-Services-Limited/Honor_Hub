@@ -12,6 +12,44 @@ const REFRESH_TOKEN_URL = `${BASE_URL}/${BASE_URL_VERSION}/auth/token/refresh/`;
 // const Register_URL = `${BASE_URL}auth/register`;
 // const Authenticated_URL = `${BASE_URL}auth/authenticated/`;
 
+const TOKEN_STORAGE_KEY = 'accessToken';
+const TOKEN_EXPIRY_KEY = 'tokenExpiry';
+const TOKEN_REFRESH_MARGIN = 60 * 1000; // Refresh 1 minute before expiration
+
+const getTokenExpiry = (token: string): number => {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.exp * 1000; // Convert to milliseconds
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Error parsing token:", error.message);
+    } else {
+      console.error("Error parsing token:", error);
+    }
+    // If token is not a JWT or parsing fails, set a default expiry (e.g., 1 hour from now)
+    return Date.now() + 60 * 60 * 1000;
+
+  }
+};
+
+export const getAccessToken = (): string | null => {
+  if (typeof document === 'undefined') return null;
+  
+  // Try to get from cookie
+  const cookieMatch = document.cookie.match(new RegExp(`(^| )${TOKEN_STORAGE_KEY}=([^;]+)`));
+  if (cookieMatch) return cookieMatch[2];
+  
+  return null;
+};
+
+const saveToken = (token: string): void => {
+  if (typeof document === 'undefined') return;
+  
+  const expiry = getTokenExpiry(token);
+  document.cookie = `${TOKEN_STORAGE_KEY}=${token}; path=/; secure; `;
+  document.cookie = `${TOKEN_EXPIRY_KEY}=${expiry}; path=/; secure; `;
+};
+
 export const auth_api = async (API_KEY:string,APP_SECRET:string):Promise<boolean> =>{
     
 
@@ -32,7 +70,7 @@ export const auth_api = async (API_KEY:string,APP_SECRET:string):Promise<boolean
         }
     
         // Store token in a cookie
-        document.cookie = `accessToken=${accessToken}; path=/; secure; `;
+        saveToken(accessToken);
         
         console.log("Login successful, token stored in cookie");
         return true;
@@ -70,16 +108,7 @@ export const refreshToken = async (APP_SECRET: string): Promise<string | null> =
       }
   
       // Store the new token in a cookie or localStorage
-      if (typeof document !== "undefined") {
-        // Browser environment
-        document.cookie = `accessToken=${newAccessToken}; path=/; secure; SameSite=Strict`;
-        console.log("Access Token Refreshed and stored in cookie");
-      } else {
-        // Non-browser environment (e.g., Node.js)
-        console.warn("Cannot set cookie in non-browser environment. Use localStorage or another method.");
-      }
-  
-      console.log("New Access Token:", newAccessToken);
+      saveToken(newAccessToken);
       return newAccessToken;
     } catch (error) {
       console.error("Error refreshing access token:", error);
@@ -87,19 +116,43 @@ export const refreshToken = async (APP_SECRET: string): Promise<string | null> =
     }
   };
 
+  export const isTokenExpired = (): boolean => {
+    if (typeof document === 'undefined') return true;
+    
+    const cookieMatch = document.cookie.match(new RegExp(`(^| )${TOKEN_EXPIRY_KEY}=([^;]+)`));
+    if (!cookieMatch) return true;
+    
+    const expiry = parseInt(cookieMatch[2], 10);
+    return Date.now() + TOKEN_REFRESH_MARGIN > expiry;
+  };
 
+  export const ensureValidToken = async (APP_SECRET: string): Promise<string | null> => {
+    const currentToken = getAccessToken();
+    
+    if (!currentToken || isTokenExpired()) {
+      console.log("Token expired or missing, refreshing...");
+      return await refreshToken(APP_SECRET);
+    }
+    
+    return currentToken;
+  };
 
-// const callRefreshNotCalled = async (error, func) => {
-//     if(error.response && error.response.status === 401) {
-//         const token_refreshed =await refreshToken()
-//             if (token_refreshed){
-//                 const retry_response = await func()
-//                 return retry_response.data
-//             }
-//     }
-//     return false
-// }
-
+// Code below is for fetching apis with token
+  // export const fetchWithToken = async (url: string, options: RequestInit = {}, APP_SECRET: string): Promise<Response> => {
+  //   const token = await ensureValidToken(APP_SECRET);
+    
+  //   if (!token) {
+  //     throw new Error("Unable to obtain valid token");
+  //   }
+    
+  //   // Add authorization header
+  //   const headers = {
+  //     ...options.headers,
+  //     Authorization: `Bearer ${token}`
+  //   };
+    
+  //   return fetch(url, { ...options, headers });
+  // };
 
 // export const logout = async () =>{ 
 //     try {
