@@ -34,4 +34,3 @@ export const TributeData: TributeDataTypes[] = [
   ]
 
 
-  console.log(TributeData);
