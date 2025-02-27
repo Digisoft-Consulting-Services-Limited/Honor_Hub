@@ -8,6 +8,14 @@ const envSchema = z.object({
   BASE_URL_VERSION: z.string().regex(/^v\d+$/, "❌ BASE_URL_VERSION must be in the format 'v1', 'v2', etc."),
 });
 
+
+console.log("Environment Variables (Raw):");
+console.log("API_KEY present:", Boolean(import.meta.env.VITE_API_KEY));
+console.log("APP_SECRET present:", Boolean(import.meta.env.VITE_APP_SECRET));
+console.log("BASE_URL present:", Boolean(import.meta.env.VITE_BASE_URL));
+console.log("BASE_URL_VERSION present:", Boolean(import.meta.env.VITE_BASE_URL_VERSION));
+
+
 // Load environment variables from Vite's `import.meta.env`
 const parsed = envSchema.safeParse({
   API_KEY: import.meta.env.VITE_API_KEY,
