@@ -28,6 +28,10 @@ RUN echo "Building with environment variables:" && \
     echo "VITE_BASE_URL present: $([ -n "$VITE_BASE_URL" ] && echo 'yes' || echo 'no')" && \
     echo "VITE_BASE_URL_VERSION present: $([ -n "$VITE_BASE_URL_VERSION" ] && echo 'yes' || echo 'no')"
 
+RUN echo "VITE_API_KEY=$VITE_API_KEY" > .env && \
+    echo "VITE_APP_SECRET=$VITE_APP_SECRET" >> .env && \
+    echo "VITE_BASE_URL=$VITE_BASE_URL" >> .env && \
+    echo "VITE_BASE_URL_VERSION=$VITE_BASE_URL_VERSION" >> .env
 
 # Build the application
 RUN npm run build
