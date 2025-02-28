@@ -6,14 +6,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   resolve: {  
-    alias: {  
-      '@': path.resolve(__dirname, 'src'), 
-    },
+  alias: {  
+    '@': path.resolve(__dirname, 'src'), 
+
   },
-  define: {
-    'import.meta.env.VITE_API_KEY': JSON.stringify(process.env.VITE_API_KEY),
-    'import.meta.env.VITE_APP_SECRET': JSON.stringify(process.env.VITE_APP_SECRET),
-    'import.meta.env.VITE_BASE_URL': JSON.stringify(process.env.VITE_BASE_URL),
-    'import.meta.env.VITE_BASE_URL_VERSION': JSON.stringify(process.env.VITE_BASE_URL_VERSION),
   },
 })
