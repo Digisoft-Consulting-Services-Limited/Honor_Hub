@@ -47,7 +47,7 @@ const MemorialForm = () => {
 
     return (
         <>
-            <Homepage_Navbar name="John Doe" imageUrl="https://example.com/image.jpg"
+            <Homepage_Navbar name="Guest" imageUrl="https://example.com/image.jpg"
 
             />
             <div className="min-h-screen bg-gray-50 py-8 px-4">

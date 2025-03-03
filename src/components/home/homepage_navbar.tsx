@@ -14,7 +14,7 @@ const Homepage_Navbar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
+  
   // Close sidebar when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -55,7 +55,7 @@ const Homepage_Navbar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
       <li className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow cursor-pointer">Contact Support</li>
     </ul>
 
-    {/* Dropdown for Hello, Salome */}
+    {/* Dropdown for Hello, User */}
     <div className="relative" ref={dropdownRef}>
       <div className="flex items-center gap-2">
         <button
@@ -63,7 +63,7 @@ const Homepage_Navbar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
           className="flex items-center gap-2 focus:outline-none transition pr-2hover:underline hover:decoration-primary-light_yellow cursor-pointer"
         >
           <FontAwesomeIcon className="" icon={faAngleDown} />
-          <span className="hover:underline hover:decoration-primary-light_yellow">Hello, Salome</span>
+          <span className="hover:underline hover:decoration-primary-light_yellow">Hello, Guest</span>
         </button>
       </div>
 
@@ -102,13 +102,13 @@ const Homepage_Navbar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
           <img
         src={imageUrl}
         alt={`${name}'s Profile`}
-        className=" object-cover rounded-full"
+        className=" object-cover rounded-full h-20"
         />
           </div>
           <div className="text-primary-light">
 
-          <h3 className="text-lg font-semibold">Salome Githinji</h3>
-          <p className="text-sm">sallygithinji72@gmail.com</p>
+          <h3 className="text-lg font-semibold">Guest</h3>
+          <p className="text-sm">Welcome</p>
           </div>
         </div>
         {/* Scrollable Content */}

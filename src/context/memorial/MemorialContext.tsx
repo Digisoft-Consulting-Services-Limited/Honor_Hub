@@ -26,17 +26,12 @@ const MemorialContext = createContext<MemorialContextType | undefined>(undefined
 // Sample memorial data
 const initialMemorials: deceasedName[] = [
   {
-    slug: 'juhudi-khamisi-lugo',
-    name: "Juhudi Khamisi Lugo",
+    slug: 'Bernard-Mwangi',
+    name: "Bernard Mwangi",
     imageUrl: "https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg",
     years: "1990 - 2024"
   },
-  {
-    slug: 'juhudi-khamisi-lugo1',
-    name: "Juhudi Khamisi Lugo1",
-    imageUrl: "https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg",
-    years: "1990 - 2024"
-  },
+
   // Add more memorials as needed
 ];
 
@@ -71,7 +66,7 @@ export const MemorialProvider: React.FC<{children: ReactNode}> = ({ children }) 
       const mobile = window.innerWidth < 768;
       setIsMobileView(mobile);
       if (mobile) {
-        setShowFullHeader(activeButton === "LIFE");
+        setShowFullHeader(activeButton === "LIFE" );
       } else {
         setShowFullHeader(true);
       }

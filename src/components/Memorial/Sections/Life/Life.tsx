@@ -44,9 +44,9 @@ const Life: React.FC = () => {
             </p>
             <p className="text-gray-700 mb-4">{item.content}</p>
             <div className="flex justify-between items-center">
-              <a href="#" className="text-blue-500 hover:underline">
+              {/* <a href="#" className="text-blue-500 hover:underline">
                 Read more
-              </a>
+              </a> */}
               {/* <button className="text-gray-500 hover:text-gray-700 flex items-center">
                 <svg
                   className="h-5 w-5 mr-1"
