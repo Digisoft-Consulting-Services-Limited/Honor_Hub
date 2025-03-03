@@ -2,7 +2,7 @@ import { TributeDataTypes } from '../../types/Memorial/tributes';
 
 export const TributeData: TributeDataTypes[] = [
     {
-      name: "Teresa Shiku",
+      name: "Mary Teresa",
       date: "December 25, 2024",
       message: [
         "Blondie, wueh! It doesn't get easy at all. I found myself talking to you today.",
@@ -12,7 +12,7 @@ export const TributeData: TributeDataTypes[] = [
       ]
     },
     {
-      name: "John Kipchumba",
+      name: "John Kimani",
       date: "December 28, 2024",
       message: [
         "Buddy, I still can't believe you're gone. Yesterday I passed by our usual spot at Uhuru Park - it's not the same without your jokes.",
@@ -22,7 +22,7 @@ export const TributeData: TributeDataTypes[] = [
       ]
     },
     {
-      name: "Lucy Mwende",
+      name: "Lucy Wanjiru",
       date: "December 30, 2024",
       message: [
         "My twin from another mother... Who will call me 'Shiks' now?",

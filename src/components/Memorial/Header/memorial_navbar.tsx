@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket,faAngleDown } from "@fortawesome/free-solid-svg-icons";
-
+import { useNavigate } from "react-router-dom"; 
 
 interface AccountImageProps {
   name: string;
@@ -12,7 +12,7 @@ const NavbarSidebar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
+  const navigate = useNavigate();
   // Close sidebar when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,8 +34,8 @@ const NavbarSidebar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
       {/* Navbar */}
       <nav className="bg-primary text-primary-light flex items-center justify-between px-4 py-3 shadow-md">
   {/* Logo */}
-  <h1 className="text-xl  pl-9 font-bold">HonorHub</h1>
-
+  <h1 className="text-xl  pl-9 font-bold" onClick={() => navigate('/home')}
+  >HonorHub</h1>
   {/* Hamburger button for mobile */}
   <button
     className="flex flex-col gap-1.5 md:hidden"
@@ -54,7 +54,7 @@ const NavbarSidebar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
       <li className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow cursor-pointer">Contact Support</li>
     </ul>
 
-    {/* Dropdown for Hello, Salome */}
+    {/* Dropdown for Hello, User */}
     <div className="relative" ref={dropdownRef}>
       <div className="flex items-center gap-2">
         <button
@@ -62,7 +62,7 @@ const NavbarSidebar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
           className="flex items-center gap-2 focus:outline-none transition pr-2hover:underline hover:decoration-primary-light_yellow cursor-pointer"
         >
           <FontAwesomeIcon className="" icon={faAngleDown} />
-          <span className="hover:underline hover:decoration-primary-light_yellow">Hello, Salome</span>
+          <span className="hover:underline hover:decoration-primary-light_yellow">Hello, Guest</span>
         </button>
       </div>
 
@@ -103,13 +103,13 @@ const NavbarSidebar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
           <img
         src={imageUrl}
         alt={`${name}'s Profile`}
-        className=" object-cover rounded-full"
+        className=" object-cover rounded-full h-20"
         />
           </div>
           <div className="text-primary-light">
 
-          <h3 className="text-lg font-semibold">Salome Githinji</h3>
-          <p className="text-sm">sallygithinji72@gmail.com</p>
+          <h3 className="text-lg font-semibold">Guest</h3>
+          <p className="text-sm">Welcome</p>
           </div>
         </div>
         {/* Scrollable Content */}

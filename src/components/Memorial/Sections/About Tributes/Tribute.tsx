@@ -13,7 +13,7 @@ const Tribute: React.FC = () => {
       {/* Add Tribute Button for Large Screens */}
       <div className="hidden md:block  flex items-center justify-between bg-primary-light p-4 rounded-md">
   <p className="text-primary-text_black font-medium">
-    Share a special moment from JUHUDI's life.
+    Share a special moment from Bernard's life.
   </p>
   <button
     onClick={openEditor}
