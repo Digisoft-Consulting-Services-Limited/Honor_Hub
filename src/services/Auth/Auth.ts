@@ -12,9 +12,9 @@ const REFRESH_TOKEN_URL = `${BASE_URL}/${BASE_URL_VERSION}/auth/token/refresh/`;
 // const Register_URL = `${BASE_URL}auth/register`;
 // const Authenticated_URL = `${BASE_URL}auth/authenticated/`;
 
-const TOKEN_STORAGE_KEY = 'accessToken';
-const TOKEN_EXPIRY_KEY = 'tokenExpiry';
-const TOKEN_REFRESH_MARGIN = 60 * 1000; // Refresh 1 minute before expiration
+export const TOKEN_STORAGE_KEY = 'accessToken';
+export const TOKEN_EXPIRY_KEY = 'tokenExpiry';
+export const TOKEN_REFRESH_MARGIN = 60 * 1000; // Refresh 1 minute before expiration
 
 const getTokenExpiry = (token: string): number => {
   try {
@@ -54,6 +54,7 @@ export const auth_api = async (API_KEY:string,APP_SECRET:string):Promise<boolean
     
 
         try {
+           
             const response = await fetch(AUTH_URL, {  method: "POST",
                 headers: {
                   "Accept": "application/json",
@@ -86,23 +87,39 @@ export const auth_api = async (API_KEY:string,APP_SECRET:string):Promise<boolean
 
 export const refreshToken = async (APP_SECRET: string): Promise<string | null> => {
     try {
+      const currentToken = getAccessToken();
+      if (!currentToken) {
+        throw new Error("No token available to refresh");
+      }
+
       const response = await fetch(REFRESH_TOKEN_URL, {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${currentToken}`  // Add Bearer authentication
+
+          
         },
         body: JSON.stringify({ appSecret: APP_SECRET }),
       });
   
       // Check if the response is successful
+          // Handle unauthorized response
+    if (response.status === 401) {
+      // Clear invalid tokens
+      document.cookie = `${TOKEN_STORAGE_KEY}=; path=/; max-age=0`;
+      document.cookie = `${TOKEN_EXPIRY_KEY}=; path=/; max-age=0`;
+      throw new Error("Session expired - Please reauthenticate");
+    }
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
   
       const result = await response.json();
-      const newAccessToken: string | undefined = result?.data?.[0]?.accessToken;
-  
+
+ // Adjusted response parsing based on typical JWT refresh patterns
+    const newAccessToken = result?.access_token || result?.data?.accessToken;  
       if (!newAccessToken) {
         throw new Error("Failed to get new access token");
       }

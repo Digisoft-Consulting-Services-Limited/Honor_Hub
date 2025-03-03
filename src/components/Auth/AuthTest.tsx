@@ -1,108 +1,92 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth_api, ensureValidToken } from "@/services/Auth/Auth"; // Import the new token functions
+import { auth_api, ensureValidToken } from "@/services/Auth/Auth";
 import { env } from "@/utils/env.config";
 import Homepage_Navbar from "../home/homepage_navbar";
 
 const AuthTest = () => {
-  const [authStatus, setAuthStatus] = useState<string>("Not tested");
+  const [authStatus, setAuthStatus] = useState<string>("Initializing...");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const testAuth = async () => {
-      const API_KEY = env.API_KEY;
-      const APP_SECRET = env.APP_SECRET;
+  // Unified authentication handler
+  const handleAuthentication = async (isRetry = false) => {
+    setIsLoading(true);
+    setAuthStatus(isRetry ? "Attempting recovery..." : "Authenticating...");
 
-      // Check if environment variables are set
+    try {
+      const { API_KEY, APP_SECRET } = env;
+      
+      // Validate environment configuration
       if (!API_KEY || !APP_SECRET) {
-        console.error("Missing API key or secret in environment variables.");
-        setAuthStatus("Missing API key or secret");
-        setIsLoading(false);
+        throw new Error("Missing required environment configuration");
+      }
+
+      // Attempt to get valid token (new or refreshed)
+      const validToken = await ensureValidToken(APP_SECRET);
+      
+      if (validToken) {
+        handleAuthSuccess("Session restored successfully");
         return;
       }
 
-      try {
-        // Check if we already have a valid token
-        const existingToken = await ensureValidToken(APP_SECRET);
-        
-        if (existingToken) {
-          console.log("Using existing valid token");
-          setAuthStatus("Authenticated with existing token");
-          navigate("/home");
-          return;
-        }
-
-        // If no valid token exists, perform full authentication
-        const success = await auth_api(API_KEY, APP_SECRET);
-        
-        if (success) {
-          setAuthStatus("Authenticated Successfully");
-          navigate("/home");
-        } else {
-          setAuthStatus("Authentication Failed");
-        }
-      } catch (error) {
-        console.error("Error during authentication:", error);
-        setAuthStatus("Authentication Error");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    testAuth();
-  }, [navigate]);
-
-  // Function to handle session recovery
-  const handleSessionRecovery = async () => {
-    setIsLoading(true);
-    
-    try {
-      const APP_SECRET = env.APP_SECRET;
-      if (!APP_SECRET) {
-        throw new Error("Missing APP_SECRET");
-      }
+      // Fallback to full authentication if no token available
+      const success = await auth_api(API_KEY, APP_SECRET);
       
-      const refreshedToken = await ensureValidToken(APP_SECRET);
-      
-      if (refreshedToken) {
-        setAuthStatus("Session Recovered");
-        navigate("/home");
+      if (success) {
+        handleAuthSuccess("Authenticated successfully");
       } else {
-        setAuthStatus("Session Recovery Failed");
+        throw new Error("Authentication failed with valid credentials");
       }
     } catch (error) {
-      console.error("Session recovery error:", error);
-      setAuthStatus("Session Recovery Error");
+      handleAuthError(error);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleAuthSuccess = (message: string) => {
+    setAuthStatus(message);
+    navigate("/home");
+    // Consider adding a small delay before navigation if needed
+  };
+
+  const handleAuthError = (error: unknown) => {
+    const errorMessage = error instanceof Error 
+      ? error.message 
+      : "Unknown authentication error";
+    
+    console.error("Authentication Error:", error);
+    setAuthStatus(`Error: ${errorMessage}`);
+  };
+
+  useEffect(() => {
+    handleAuthentication();
+  }, []);
+
   return (
     <>
-      <Homepage_Navbar name="User Name" imageUrl="path/to/image.jpg" />
+      <Homepage_Navbar name="Guest" imageUrl="path/to/image.jpg" />
       <div className="p-4">
-        <h2 className="text-2xl font-bold mb-4">Authenticating User</h2>
-        {isLoading ? (
-          <div className="flex flex-col items-center space-y-2">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-            <p className="text-gray-600">Authenticating...</p>
+        <h2 className="text-2xl font-bold mb-4">Authentication Status</h2>
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            {isLoading && (
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-900" />
+            )}
+            <p className="text-gray-800">{authStatus}</p>
           </div>
-        ) : (
-          <div className="space-y-4">
-            <p className="text-gray-800">Status: {authStatus}</p>
-            
-            {authStatus === "Authentication Failed" || authStatus === "Session Recovery Failed" ? (
-              <button
-                onClick={handleSessionRecovery}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-              >
-                Try to Recover Session
-              </button>
-            ) : null}
-          </div>
-        )}
+
+          {authStatus.startsWith("Error") && (
+            <button
+              onClick={() => handleAuthentication(true)}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors disabled:opacity-50"
+              disabled={isLoading}
+            >
+              {isLoading ? "Processing..." : "Retry Authentication"}
+            </button>
+          )}
+        </div>
       </div>
     </>
   );
