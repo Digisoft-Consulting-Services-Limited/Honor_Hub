@@ -20,12 +20,12 @@ const Middle_Navbar: React.FC = () => {
       {isMobileView ? (
         activeButton === "LIFE" ? (
           // Show all tabs when LIFE is active
-          <div className="flex-row items-center  p-4">
+          <div className="flex overflow-x-auto p-4 gap-2">
             {["LIFE", "PROGRAM", "TRIBUTES", "HYMNS"].map((item) => (
               <button
                 key={item}
                 onClick={() => setActiveButton(item)}
-                className={`p-2 justify-between flex-1 min-w-[80px] sm:min-w-[120px] rounded-md font-medium transition-all duration-200 text-center ${
+                className={`p-2 rounded-md font-medium transition-all duration-200 ${
                   activeButton === item
                     ? "text-primary bg-primary-hover_light"
                     : "text-white hover:text-primary hover:bg-primary-hover_light"
@@ -56,8 +56,7 @@ const Middle_Navbar: React.FC = () => {
         )
       ) : (
         // Original desktop view
-        <div className="relative">
-        <div className="flex overflow-x-auto p-4 gap-2 justify-center">
+        <div className="flex justify-center space-x-8 py-3">
           {["LIFE", "PROGRAM", "TRIBUTES", "HYMNS"].map((item) => (
             <button
               key={item}
@@ -65,14 +64,13 @@ const Middle_Navbar: React.FC = () => {
               className={`p-2 rounded-md font-medium transition-all duration-200 ${
                 activeButton === item
                   ? "text-primary bg-primary-hover_light"
-                  : "text-white hover:text-primary hover:bg-primary-hover_light"
-              } whitespace-nowrap`}
+                  : "text-white hover:text-primary hover:bg-primary-hover_light hover:scale-105"
+              }`}
             >
               {item}
             </button>
           ))}
         </div>
-      </div>
       )}
     </nav>
   );
