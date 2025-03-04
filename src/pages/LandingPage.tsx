@@ -108,6 +108,8 @@ export default function LandingPage() {
                     src="/img/sun.jpg" 
                     alt="Memorial example"
                     className="w-full h-full object-cover"
+                    loading='lazy'
+
                   />
                   <div className="absolute inset-0 rounded-2xl" />
                 </motion.div>
@@ -124,6 +126,7 @@ export default function LandingPage() {
                         src="/img/memorial.png"
                         alt="Candle memorial"
                         className="w-full h-full object-cover"
+                        loading='lazy'
                       />
                       <div className="absolute inset-0 rounded-2xl" />
                       <div className="absolute inset-0 shadow-[inset_0_0_30px_rgba(0,0,0,0.1)]" />

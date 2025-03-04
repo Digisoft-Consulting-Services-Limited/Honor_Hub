@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 type RelationshipType =
-    | "Aunt" | "Boyfriend" | "Brother" | "Brother-in-law" | "Colleague" | "Cousin"
+    |"None"| "Aunt" | "Boyfriend" | "Brother" | "Brother-in-law" | "Colleague" | "Cousin"
     | "Child" | "Daughter" | "Daughter-in-law" | "Father" | "Father-in-law"
     | "Friend" | "Fiancé" | "Girlfriend" | "Grandfather" | "Grandmother" | "Grandchild"
     | "Husband" | "Mother" | "Mother-in-law" | "Parent" | "Sibling" | "Spouse";
@@ -27,7 +27,7 @@ type FormValues = {
 const PLANS: planType[] = ['Basic', 'Premium', 'Family'];
 
 const relationships: RelationshipType[] = [
-    "Aunt", "Boyfriend", "Brother", "Brother-in-law", "Colleague", "Cousin",
+    "None","Aunt", "Boyfriend", "Brother", "Brother-in-law", "Colleague", "Cousin",
     "Child", "Daughter", "Daughter-in-law", "Father", "Father-in-law", "Friend",
     "Fiancé", "Girlfriend", "Grandfather", "Grandmother", "Grandchild",
     "Husband", "Mother", "Mother-in-law", "Parent", "Sibling", "Spouse"
@@ -234,8 +234,8 @@ const MemorialForm = () => {
                         <button
                             type="submit"
                             className="w-full bg-primary text-white hover:text-primary py-2 px-4 rounded-md hover:bg-primary-hover_light focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                        >
-                            Continue
+                            disabled>
+                            Coming Soon
                         </button>
                     </form>
                 </div>

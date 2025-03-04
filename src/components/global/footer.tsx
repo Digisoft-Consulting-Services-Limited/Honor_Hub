@@ -35,7 +35,15 @@ const Footer = () => {
 </div>
 
 <div className="border-t border-b border-primary-text_black mt-6 sm:mt-8 p-6 sm:pt-8 text-center text-xs  sm:text-sm">
-<p>© {new Date().getFullYear()} HonorHub. All rights reserved.</p>
+<p className="text-white-600 text-sm">
+  © {new Date().getFullYear()} HonorHub. All rights reserved. Made with ❤️ by{" "}
+  <a
+    href="mailto:sallygithinji72@gmail.com"
+    className="text-blue-400 hover:text-blue-500 hover:underline transition duration-300 text-bold"
+  >
+    Sally
+  </a>
+</p>
 </div>
 </footer>
     </div>

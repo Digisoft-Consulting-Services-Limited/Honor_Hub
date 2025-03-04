@@ -11,12 +11,12 @@ import MemorialProgram from '@/components/Memorial/Sections/Program/MemorialProg
 import Hymns from '@/components/Memorial/Sections/Hymns/Hymns';
 import { useEffect  } from 'react';
 import { useParams } from "react-router-dom";
+import { NotFoundPage } from './NotFound';
 
 
 
 const Memorial: React.FC = () => {
   const { slug } = useParams<{ slug: string }>(); // Get slug from URL
-  console.log("Params object:", slug); // Debugging
 
 
     
@@ -32,7 +32,6 @@ const Memorial: React.FC = () => {
   
   useEffect(() => {
     if (slug) {
-        console.log("Loading memorial for slug:", slug);
         loadMemorial(slug);
     }
 }, [slug, loadMemorial]);
@@ -40,9 +39,10 @@ const Memorial: React.FC = () => {
 if (isLoading) return <p className="text-center text-lg text-gray-600">Loading memorial...</p>;
 
 if (!currentMemorial) return (
-  <p className="text-center text-lg text-red-500">
-    Memorial not found. Please check the URL or try again later.
-  </p>
+  // <p className="text-center text-lg text-red-500">
+  //   Memorial not found. Please check the URL or try again later.
+  // </p>
+  <NotFoundPage/>
 );
 
 
