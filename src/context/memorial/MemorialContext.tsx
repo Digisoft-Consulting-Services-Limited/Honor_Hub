@@ -28,7 +28,7 @@ const initialMemorials: deceasedName[] = [
   {
     slug: 'Heri-Wonder-Ochieng',
     name: "Heri Wonder Ochieng",
-    imageUrl: "https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg",
+    imageUrl: "/public/img/heri.png",
     years: "29/01/2019-23/02/2025"
   },
 

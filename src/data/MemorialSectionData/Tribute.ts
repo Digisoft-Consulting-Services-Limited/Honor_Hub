@@ -10,7 +10,7 @@ export const TributeData: TributeDataTypes[] = [
       ]
     },
     {
-      name: "Anties",
+      name: "Aunties",
       date: "March 5, 2025",
       message: [
         "Words cannot express the pain in our hearts. The thought of life without you feels unbearable, but we take comfort in knowing you are in a better place.",
