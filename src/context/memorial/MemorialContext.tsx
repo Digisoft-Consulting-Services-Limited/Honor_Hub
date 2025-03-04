@@ -26,10 +26,10 @@ const MemorialContext = createContext<MemorialContextType | undefined>(undefined
 // Sample memorial data
 const initialMemorials: deceasedName[] = [
   {
-    slug: 'Bernard-Mwangi',
-    name: "Bernard Mwangi",
+    slug: 'Heri-Wonder-Ochieng',
+    name: "Heri Wonder Ochieng",
     imageUrl: "https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg",
-    years: "1990 - 2024"
+    years: "29/01/2019-23/02/2025"
   },
 
   // Add more memorials as needed

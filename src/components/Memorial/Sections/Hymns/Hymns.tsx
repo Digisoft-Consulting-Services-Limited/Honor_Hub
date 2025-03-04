@@ -8,7 +8,7 @@ const Hymns: React.FC = () => {
         Hymns Collection
       </h1>
       <h2 className="text-lg text-gray-700 text-center mt-2">
-        A Selection of Favorite Hymns
+        A Selection of Hymns
       </h2>
       <div className="space-y-6 mx-auto">
         {hymnsData.map((hymn) => (
