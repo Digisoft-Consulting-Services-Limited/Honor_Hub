@@ -1,17 +1,17 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { TributeData } from "@/data/MemorialSectionData/Tribute";
-import AddTributeEditor from './AddTribute'; // Import the modal component
+// import AddTributeEditor from './AddTribute'; // Import the modal component
 
 const Tribute: React.FC = () => {
-  const [isEditorOpen, setEditorOpen] = useState(false);
+  // const [isEditorOpen, setEditorOpen] = useState(false);
 
-  const openEditor = () => setEditorOpen(true);
-  const closeEditor = () => setEditorOpen(false);
+  // const openEditor = () => setEditorOpen(true);
+  // const closeEditor = () => setEditorOpen(false);
 
   return (
     <div className="relative">
       {/* Add Tribute Button for Large Screens */}
-      <div className="hidden md:block  flex items-center justify-between bg-primary-light p-4 rounded-md">
+      {/* <div className="hidden md:block  flex items-center justify-between bg-primary-light p-4 rounded-md">
   <p className="text-primary-text_black font-medium">
     Share a special moment from Bernard's life.
   </p>
@@ -35,7 +35,7 @@ const Tribute: React.FC = () => {
     </svg>
     Write a story
   </button>
-</div>
+</div> */}
 
 
       {/* List of Tributes */}
@@ -69,7 +69,7 @@ const Tribute: React.FC = () => {
       </div>
 
       {/* Pencil Icon for Small Screens */}
-      <div className="fixed bottom-4 right-4 md:hidden">
+      {/* <div className="fixed bottom-4 right-4 md:hidden">
         <button
           onClick={openEditor}
           className="p-3 bg-primary text-primary-light rounded-full shadow-lg hover:bg-primary-hover_light transition-colors"
@@ -88,10 +88,10 @@ const Tribute: React.FC = () => {
             />
           </svg>
         </button>
-      </div>
+      </div> */}
 
       {/* Add Tribute Editor Modal */}
-      <AddTributeEditor isOpen={isEditorOpen} onClose={closeEditor} />
+      {/* <AddTributeEditor isOpen={isEditorOpen} onClose={closeEditor} /> */}
     </div>
   );
 };
