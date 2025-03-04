@@ -12,6 +12,7 @@ import Hymns from '@/components/Memorial/Sections/Hymns/Hymns';
 import { useEffect  } from 'react';
 import { useParams } from "react-router-dom";
 import { NotFoundPage } from './NotFound';
+import Footer from '@/components/global/footer';
 
 
 
@@ -77,6 +78,7 @@ if (!currentMemorial) return (
         {renderPageContent()}
         {/* <SecondColumn /> */}
       </div>
+      <Footer/>
     </>
   );
 };
