@@ -51,8 +51,11 @@ const NavbarSidebar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
     <ul className="flex space-x-6">
       <li className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow cursor-pointer">Create a New Website</li>
       <li className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow cursor-pointer">Invite Others</li>
-      <li className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow cursor-pointer">Contact Support</li>
-    </ul>
+      <li
+  className="hover:bg-primary-hover_light p-2 rounded cursor-pointer  transition duration-300"
+>
+  <a href="mailto:sallygithinji72@gmail.com">Contact Support</a>
+</li>    </ul>
 
     {/* Dropdown for Hello, User */}
     <div className="relative" ref={dropdownRef}>
@@ -127,9 +130,12 @@ const NavbarSidebar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
             <li className="hover:bg-primary-hover_light p-2 rounded cursor-pointer">
               Share with a Friend
             </li>
-            <li className="hover:bg-primary-hover_light p-2 rounded cursor-pointer">
-              Contact Support
-            </li>
+            <li
+  className="hover:bg-primary-hover_light p-2 rounded cursor-pointer  transition duration-300"
+>
+  <a href="mailto:sallygithinji72@gmail.com">Contact Support</a>
+</li>
+
           </ul>
           <div className="border-t border-[#704f3a] mt-4 pt-4">
             <h4 className="text-md font-bold mb-2">My Account</h4>
