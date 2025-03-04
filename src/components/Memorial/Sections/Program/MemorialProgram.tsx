@@ -35,7 +35,11 @@ const MemorialProgram: React.FC = () => {
               
               {event.description && (
                 <p className="text-gray-600 pl-2 border-l-2 border-gray-200 ml-4">
-                  {event.description}
+                  {event.description.map((item, index) => (
+                    <span key={index} className="block mb-2">
+                      {item}
+                    </span>
+                  ))}
                 </p>
               )}
             </div>

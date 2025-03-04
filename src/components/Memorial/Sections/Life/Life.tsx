@@ -24,8 +24,8 @@ const Life: React.FC = () => {
         </ul>
         
         {/* Paragraph */}
-        <p className="text-primary leading-loose text-justify mt-4">
-          {LifeData.description.paragraph}
+        <p className="text-primary font-bold text-lg leading-loose  text-justify mt-4">
+         " {LifeData.description.paragraph} "
         </p>
       </div>
 

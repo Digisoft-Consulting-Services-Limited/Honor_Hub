@@ -2,32 +2,21 @@ import  { LifeDataType  } from "../../types/Memorial/life"
 
 export const LifeData: LifeDataType = {
   description: {
-    quote: 'Let the memory of Bernard be with us forever.',
+    quote: 'Let the memory of Heri Wonder Ochieng be with us forever.',
     listItems: [
-      "33 years old",
-      "Born on July 25, 1990 in Miritini, Mombasa County, Kenya",
-      "Passed away on July 3, 2024 in Nairobi, Nairobi County, Kenya"
+   "A life so brief,a love so deep.",
+   "Baby Wonder,you will always be cherished",
+   
     ],
-    paragraph: "Because we loved Bernard soo much and he touched each one of us..."
+    paragraph: "I have fought the good fight,I have finished the race,I have kept the faith.\n\n2 Timothy 4:7"
   },
   lifeItems: [
     {
-      title: "Early Life",
-      date: "July 12, 2024",
-      author: "Dorothy Samba",
-      content: "Bernard Mwangi spent his early childhood on a KRA estate in Miritini with other KRA families who were like brothers and sisters to him. He was born on 25th July 1990 to Kharisa Khamis Lugo and Patience Kazungu Lugo and from an early age, he had an inseparable bond with his big sister Ahadi Lugo. Since Miritini was not far away from Kasameni and Bofu, Bernard enjoyed travelling to the village often to spend time with the extended Lugo family. They equally played a key role in shaping his early childhood by instilling in him the power of community..."
+      "title": "A Tribute to Heri Wonder",
+      "date": "March 5, 2025",
+      "author": "Family",
+      "content": "Heri Wonder was born on 29th January 2019, a beautiful soul who brought light and joy to everyone around her. From a young age, she was full of life—joyful, loving, caring, and friendly to all. She had a special gift of drawing people to her; in every new place she went, she pulled crowds with her infectious smile and boundless energy. Wonder was truly a wonder. \n\nHer presence was impossible to ignore—her warmth, her laughter, and her unfathomable aura made her a star in every room she entered. She excelled in everything she did, both in school and extracurricular activities. Her determination, intelligence, and kindness set her apart, making her not just a great student but also a beloved friend and classmate. \n\nOne of her most recent achievements was an award she received during the pet competition organized by St. John Ambulance. It was just another example of how she shined in everything she touched. \n\nBut on 23rd February 2025, our sweet Wonder left us too soon. We loved you, Wonder, but you were too big for this world. The world could not contain your greatness—it suffocated you instead. Our hearts ache with your absence, but we find peace in knowing you are now resting among the angels, shining even brighter. \n\nUntil we meet again, lovely.\nUntil we meet again, Donde.\nUntil we meet again, princess.\nUntil we meet again, baby girl.\nUntil we meet again. \n\nRest well, our sweet Wonder. You will forever be in our hearts."
     },
-    {
-      title: "Education",
-      date: "August 5, 2024",
-      author: "John Karanja",
-      content: "uhudi attended Miritini Primary School and later pursued his high school education at Alliance High School. His academic excellence earned him a scholarship to study Engineering at the University of Nairobi, where he graduated with honors."
-    },
-    {
-      title: "Career",
-      date: "September 10, 2024",
-      author: "Sarah Mutua",
-      content: "Bernard's career began as an intern at KRA, where he quickly climbed the ranks to become a respected engineer. He was known for his innovative solutions and dedication to mentoring young engineers."
-    }
+
   ]
 };
