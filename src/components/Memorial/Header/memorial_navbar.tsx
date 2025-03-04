@@ -52,7 +52,7 @@ const NavbarSidebar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
       <li className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow cursor-pointer">Create a New Website</li>
       <li className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow cursor-pointer">Invite Others</li>
       <li
-  className="hover:bg-primary-hover_light p-2 rounded cursor-pointer  transition duration-300"
+  className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow   cursor-pointer  "
 >
   <a href="mailto:sallygithinji72@gmail.com">Contact Support</a>
 </li>    </ul>

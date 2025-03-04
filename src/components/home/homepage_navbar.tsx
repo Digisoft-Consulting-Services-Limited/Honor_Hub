@@ -53,7 +53,7 @@ const Homepage_Navbar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
   <div className="hidden md:flex items-center gap-6 pr-6"> {/* Hidden on mobile */}
     <ul className="flex space-x-6">
     <li
-  className="hover:bg-primary-hover_light p-2 rounded cursor-pointer  transition duration-300"
+  className="hover:underline cursor-pointer  transition duration-300"
 >
   <a href="mailto:sallygithinji72@gmail.com">Contact Support</a>
 </li>    </ul>
@@ -126,7 +126,7 @@ const Homepage_Navbar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
             </li>
             
             <li
-  className="hover:bg-primary-hover_light p-2 rounded cursor-pointer  transition duration-300"
+  className="hover:bg-primary-hover_light p-2 rounded  cursor-pointer  "
 >
   <a href="mailto:sallygithinji72@gmail.com">Contact Support</a>
 </li>
