@@ -77,6 +77,17 @@ export const TributeData: TributeDataTypes[] = [
         "Be bold--even when unsure,approach life with confidence"
 
       ]
+    },
+    {
+      name: "Mommy",
+      date: "March 5, 2025",
+      message: [
+        "My sweet baby Wonder, my heart aches in ways I cannot describe. I carried you, I dreamed of the life we would share, and I longed to watch you grow. But life had a different path for you, one I struggle to understand.",
+        " Though you are not in my arms, you will always be in my heart. I close my eyes and imagine you wrapped in warmth, surrounded by love, safe among the angels. I hope you can still feel my love, my sweet child.",
+        "Rest peacefully, my little Wonder. You were my greatest joy, and I will love you forever."
+      ]
+
+
     }
   ]
 
