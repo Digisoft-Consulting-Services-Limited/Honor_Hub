@@ -47,14 +47,12 @@ export const MemorialProvider: React.FC<{children: ReactNode}> = ({ children }) 
   // Load memorial based on slug
   const loadMemorial = (slug: string) => {
     setIsLoading(true);
-    console.log("Looking for memorial with slug:", slug); // Debugging output
 
     const found = memorials.find(m => m.slug === slug);
-    if (found) {
-        console.log("Memorial found:", found); // Debugging output
-    } else {
-        console.log("No memorial found for slug:", slug);
-    }
+//     if (found) {
+//       return true
+//     } else {
+// return false    }
 
     setCurrentMemorial(found || null);
     setIsLoading(false);
