@@ -40,7 +40,7 @@ export default function LandingPage() {
           <div className="w-full sm:w-auto flex justify-center">
             <button
               onClick={() => {
-                navigate('/home');
+                navigate('/auth-test');
               }}
               className=" border-4 border-primary-hover_light hover:bg-primary-hover_light p-2 sm:p-3 rounded-lg text-sm sm:text-base text-primary-light hover:text-black bg-primary w-full sm:w-auto"
             >

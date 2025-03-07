@@ -1,36 +1,18 @@
 import { env } from "@/utils/env.config";
 
-
-const BASE_URL = env.BASE_URL
-const BASE_URL_VERSION = env.BASE_URL_VERSION
-
+const BASE_URL = env.BASE_URL;
+const BASE_URL_VERSION = env.BASE_URL_VERSION;
 
 const AUTH_URL = `${BASE_URL}/${BASE_URL_VERSION}/auth/token/`;
 const REFRESH_TOKEN_URL = `${BASE_URL}/${BASE_URL_VERSION}/auth/token/refresh/`;
-// const NOTES_URL = `${BASE_URL}notes/`;
-// const LOGOUT_URL = `${BASE_URL}auth/logout/`;
-// const Register_URL = `${BASE_URL}auth/register`;
-// const Authenticated_URL = `${BASE_URL}auth/authenticated/`;
 
 export const TOKEN_STORAGE_KEY = 'accessToken';
 export const TOKEN_EXPIRY_KEY = 'tokenExpiry';
-export const TOKEN_REFRESH_MARGIN = 60 * 1000; // Refresh 1 minute before expiration
+export const REFRESH_TOKEN_KEY = 'refreshTokenInProgress';
+export const TOKEN_REFRESH_MARGIN = 2 * 60 * 1000; // Refresh 2 minutes before expiration
 
-const getTokenExpiry = (token: string): number => {
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.exp * 1000; // Convert to milliseconds
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Error parsing token:", error.message);
-    } else {
-      console.error("Error parsing token:", error);
-    }
-    // If token is not a JWT or parsing fails, set a default expiry (e.g., 1 hour from now)
-    return Date.now() + 60 * 60 * 1000;
-
-  }
-};
+// Global refresh promise to prevent multiple simultaneous refreshes
+let refreshPromise: Promise<string | null> | null = null;
 
 export const getAccessToken = (): string | null => {
   if (typeof document === 'undefined') return null;
@@ -42,176 +24,262 @@ export const getAccessToken = (): string | null => {
   return null;
 };
 
-const saveToken = (token: string): void => {
+// Save token with server-provided expiry time
+const saveToken = (token: string, expiryTimestamp: number): void => {
   if (typeof document === 'undefined') return;
   
-  const expiry = getTokenExpiry(token);
-  document.cookie = `${TOKEN_STORAGE_KEY}=${token}; path=/; secure; `;
-  document.cookie = `${TOKEN_EXPIRY_KEY}=${expiry}; path=/; secure; `;
+  // Convert to milliseconds if necessary (if it's in seconds)
+  const expiry = expiryTimestamp > 9999999999 ? expiryTimestamp : expiryTimestamp * 1000;
+  
+  // Set cookies with explicit expiry time
+  const expiryDate = new Date(expiry);
+  
+  document.cookie = `${TOKEN_STORAGE_KEY}=${token}; path=/; secure; expires=${expiryDate.toUTCString()}`;
+  document.cookie = `${TOKEN_EXPIRY_KEY}=${expiry}; path=/; secure; expires=${expiryDate.toUTCString()}`;
+  
+  // Also store in localStorage if available
+  try {
+    localStorage.setItem(TOKEN_STORAGE_KEY, token);
+    localStorage.setItem(TOKEN_EXPIRY_KEY, expiry.toString());
+  } catch (e) {
+    console.warn("Unable to use localStorage for token storage",e);
+  }
 };
 
-export const auth_api = async (API_KEY:string,APP_SECRET:string):Promise<boolean> =>{
+export const clearTokens = (): void => {
+  if (typeof document === 'undefined') return;
+  
+  // Clear cookies
+  document.cookie = `${TOKEN_STORAGE_KEY}=; path=/; max-age=0`;
+  document.cookie = `${TOKEN_EXPIRY_KEY}=; path=/; max-age=0`;
+  document.cookie = `${REFRESH_TOKEN_KEY}=; path=/; max-age=0`;
+  
+  // Clear localStorage
+  try {
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    localStorage.removeItem(TOKEN_EXPIRY_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
+  } catch (e) {
+    console.warn("Unable to clear localStorage",e);
+  }
+};
+
+export const auth_api = async (API_KEY: string, APP_SECRET: string): Promise<boolean> => {
+  try {
+    const response = await fetch(AUTH_URL, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ apiKey: API_KEY, appSecret: APP_SECRET }),
+    });
     
-
-        try {
-           
-            const response = await fetch(AUTH_URL, {  method: "POST",
-                headers: {
-                  "Accept": "application/json",
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ apiKey: API_KEY, appSecret: APP_SECRET }),
-        });
-        
-        const result = await response.json();
-
-        const accessToken:string | undefined = result?.data?.[0]?.accessToken;
-        if (!accessToken) {
-          throw new Error("No access token received");
-        }
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
     
-        // Store token in a cookie
-        saveToken(accessToken);
-        
-        console.log("Login successful, token stored in cookie");
-        return true;
-        } catch (error) {
-            console.error("Error during login:", error); 
-            return false;
-        }
+    const result = await response.json();
+
+    const accessToken: string | undefined = result?.data?.[0]?.accessToken;
+    const expiryTimestamp: number | undefined = result?.data?.[0]?.expires;
     
+    if (!accessToken || !expiryTimestamp) {
+      throw new Error("Missing access token or expiry from response");
+    }
 
-}
-
-
+    // Store token with server-provided expiry
+    saveToken(accessToken, expiryTimestamp);
+    
+    console.log("Login successful, token stored");
+    return true;
+  } catch (error) {
+    console.error("Error during login:", error); 
+    return false;
+  }
+};
 
 export const refreshToken = async (APP_SECRET: string): Promise<string | null> => {
+  // If a refresh is already in progress, return that promise to prevent multiple refreshes
+  if (refreshPromise) {
+    console.log("Token refresh already in progress, reusing existing promise");
+    return refreshPromise;
+  }
+  
+  try {
+    // Set refresh in progress flag
+    if (typeof document !== 'undefined') {
+      document.cookie = `${REFRESH_TOKEN_KEY}=true; path=/; max-age=300`; // 5-minute timeout
+    }
+    
+    // Create a new refresh promise
+    refreshPromise = (async () => {
+      try {
+        const currentToken = getAccessToken();
+        if (!currentToken) {
+          throw new Error("No token available to refresh");
+        }
+
+        console.log("Attempting to refresh token...");
+        
+        const response = await fetch(REFRESH_TOKEN_URL, {
+          method: "POST",
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${currentToken}`
+          },
+          body: JSON.stringify({ appSecret: APP_SECRET }),
+        });
+
+        // Handle unauthorized response
+        if (response.status === 401) {
+          // Clear invalid tokens
+          clearTokens();
+          throw new Error("Session expired - Please reauthenticate");
+        }
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error during refresh! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("Refresh token response:", result);
+
+        // Check different response formats but prefer the same format as login response
+        let newAccessToken: string | null = null;
+        let newExpiry: number | null = null;
+        
+        if (result?.data?.[0]?.accessToken) {
+          newAccessToken = result.data[0].accessToken;
+          newExpiry = result.data[0].expires;
+        } else if (result?.data?.accessToken) {
+          newAccessToken = result.data.accessToken;
+          newExpiry = result.data.expires;
+        } else if (result?.accessToken) {
+          newAccessToken = result.accessToken;
+          newExpiry = result.expires;
+        } else if (result?.access_token) {
+          newAccessToken = result.access_token;
+          newExpiry = result.expiry || result.expires_in;
+        }
+
+        if (!newAccessToken || !newExpiry) {
+          throw new Error("Failed to get new access token or expiry from response");
+        }
+
+        // Store the new token with server-provided expiry
+        saveToken(newAccessToken, newExpiry);
+        console.log("Token refreshed successfully");
+        return newAccessToken;
+      } finally {
+        // Clear refresh in progress flag
+        if (typeof document !== 'undefined') {
+          document.cookie = `${REFRESH_TOKEN_KEY}=; path=/; max-age=0`;
+        }
+      }
+    })();
+    
+    return await refreshPromise;
+  } catch (error) {
+    console.error("Error refreshing access token:", error);
+    return null;
+  } finally {
+    // Clear the refresh promise after completion (successful or not)
+    setTimeout(() => {
+      refreshPromise = null;
+    }, 100);
+  }
+};
+
+export const isTokenExpired = (): boolean => {
+  if (typeof document === 'undefined') return true;
+  
+  const token = getAccessToken();
+  if (!token) return true;
+  
+  let expiry: number | null = null;
+  
+  // Try to get expiry from cookie
+  const cookieMatch = document.cookie.match(new RegExp(`(^| )${TOKEN_EXPIRY_KEY}=([^;]+)`));
+  if (cookieMatch) {
+    expiry = parseInt(cookieMatch[2], 10);
+  } 
+  
+  // If not in cookie, try localStorage
+  if (!expiry && typeof localStorage !== 'undefined') {
     try {
-      const currentToken = getAccessToken();
-      if (!currentToken) {
-        throw new Error("No token available to refresh");
+      const storedExpiry = localStorage.getItem(TOKEN_EXPIRY_KEY);
+      if (storedExpiry) {
+        expiry = parseInt(storedExpiry, 10);
       }
-
-      const response = await fetch(REFRESH_TOKEN_URL, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${currentToken}`  // Add Bearer authentication
-
-          
-        },
-        body: JSON.stringify({ appSecret: APP_SECRET }),
-      });
-  
-      // Check if the response is successful
-          // Handle unauthorized response
-    if (response.status === 401) {
-      // Clear invalid tokens
-      document.cookie = `${TOKEN_STORAGE_KEY}=; path=/; max-age=0`;
-      document.cookie = `${TOKEN_EXPIRY_KEY}=; path=/; max-age=0`;
-      throw new Error("Session expired - Please reauthenticate");
+    } catch (e) {
+      console.warn("Unable to access localStorage for token expiry",e);
     }
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+  }
   
-      const result = await response.json();
-
- // Adjusted response parsing based on typical JWT refresh patterns
-    const newAccessToken = result?.access_token || result?.data?.accessToken;  
-      if (!newAccessToken) {
-        throw new Error("Failed to get new access token");
-      }
+  // If no expiry found, token is considered expired
+  if (!expiry) return true;
   
-      // Store the new token in a cookie or localStorage
-      saveToken(newAccessToken);
-      return newAccessToken;
-    } catch (error) {
-      console.error("Error refreshing access token:", error);
-      return null;
-    }
-  };
+  return Date.now() + TOKEN_REFRESH_MARGIN > expiry;
+};
 
-  export const isTokenExpired = (): boolean => {
-    if (typeof document === 'undefined') return true;
-    
-    const cookieMatch = document.cookie.match(new RegExp(`(^| )${TOKEN_EXPIRY_KEY}=([^;]+)`));
-    if (!cookieMatch) return true;
-    
-    const expiry = parseInt(cookieMatch[2], 10);
-    return Date.now() + TOKEN_REFRESH_MARGIN > expiry;
-  };
-
-  export const ensureValidToken = async (APP_SECRET: string): Promise<string | null> => {
+export const ensureValidToken = async (APP_SECRET: string): Promise<string | null> => {
+  try {
     const currentToken = getAccessToken();
     
-    if (!currentToken || isTokenExpired()) {
-      console.log("Token expired or missing, refreshing...");
+    if (!currentToken) {
+      console.log("No token found");
+      return null;
+    }
+    
+    if (isTokenExpired()) {
+      console.log("Token expired or will expire soon, refreshing...");
       return await refreshToken(APP_SECRET);
     }
     
     return currentToken;
+  } catch (error) {
+    console.error("Error ensuring valid token:", error);
+    return null;
+  }
+};
+
+// Setup automatic refresh for API calls
+export const setupAutoRefresh = (APP_SECRET: string): void => {
+  // Intercept fetch to auto-refresh token when needed
+  const originalFetch = window.fetch;
+  window.fetch = async function(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+    // Skip token handling for auth-related endpoints
+    const url = typeof input === 'string' ? input : (input as Request).url;
+    if (url.includes('/auth/token/')) {
+      return originalFetch(input, init);
+    }
+    
+    // Ensure we have a valid token before making the request
+    const token = await ensureValidToken(APP_SECRET);
+    
+    if (token && init) {
+      // Create headers if they don't exist
+      const headers = init.headers ? new Headers(init.headers) : new Headers();
+      
+      // Add or update Authorization header with the fresh token
+      headers.set('Authorization', `Bearer ${token}`);
+      
+      // Update the init object with the new headers
+      init.headers = headers;
+    }
+    
+    // Make the original request with potentially refreshed token
+    return originalFetch(input, init);
   };
-
-// Code below is for fetching apis with token
-  // export const fetchWithToken = async (url: string, options: RequestInit = {}, APP_SECRET: string): Promise<Response> => {
-  //   const token = await ensureValidToken(APP_SECRET);
-    
-  //   if (!token) {
-  //     throw new Error("Unable to obtain valid token");
-  //   }
-    
-  //   // Add authorization header
-  //   const headers = {
-  //     ...options.headers,
-  //     Authorization: `Bearer ${token}`
-  //   };
-    
-  //   return fetch(url, { ...options, headers });
-  // };
-
-// export const logout = async () =>{ 
-//     try {
-//         await axios.post(LOGOUT_URL,{},{withCredentials:true});
-//     return true
-//     } catch (error) {
-//         console.error("Failed to logout:", error.message); 
-//         return { success: false, message: error.message };     }
-    
-//  }
-
-//  export const isAuthenticated = async () => {
-//     try {
-//         // Sending POST request to the authentication endpoint with credentials
-//         await axios.post(Authenticated_URL, {}, { withCredentials: true });
-//         return true;
-//     } catch (error) {
-//         if (error.response) {
-         
-//             console.error("Error Response:", error.response);
-//             console.error("Error Status:", error.response.status);
-//             console.error("Error Data:", error.response.data);
-//             return false;
-//         } else if (error.request) {
-//             console.error("Error Request:", error.request);
-//             return false;
-//         } else {
-//             console.error("Error Message:", error.message);
-//             return false;
-//         }
-//     }
-// };
-
-// export const register_api = async (first_name,username,email,password) =>{
-//     try{
-
-//         const response = await axios.post(Register_URL,{first_name:first_name, username:username,email:email,password:password},{withCredentials:true})
-//         if (response.status === 201){
-//             return response.data}
-
-//     }catch (error){
-//         console.error("Error during registration:", error);
-//         return false;
-//     }
-// }
+  
+  // Set up a regular check for token expiration
+  const refreshInterval = 60 * 1000; // Check every minute
+  setInterval(async () => {
+    if (isTokenExpired()) {
+      console.log("Interval check: token needs refreshing");
+      await refreshToken(APP_SECRET);
+    }
+  }, refreshInterval);
+};

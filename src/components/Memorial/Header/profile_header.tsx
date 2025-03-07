@@ -5,7 +5,7 @@ const ProfileHeader: React.FC = () => {
   const { currentMemorial } = useMemorial();
 
   if (!currentMemorial) return null; // Shows nothing until memorial is loaded
-  console.log("ProfileHeader rendering with currentMemorial:", currentMemorial);
+  // console.log("ProfileHeader rendering with currentMemorial:", currentMemorial);
 
   return (
     <div className="bg-[url('/img/candle.png')] bg-cover bg-center lg:h-screen/2 text-white relative">
