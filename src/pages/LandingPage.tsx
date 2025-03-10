@@ -37,7 +37,7 @@ export default function LandingPage() {
       <nav className="bg-primary-light_yellow shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
           <h1 className="text-xl sm:text-2xl font-semibold black">HonorHub</h1>
-          <div className="w-full sm:w-auto flex justify-center">
+          {/* <div className="w-full sm:w-auto flex justify-center">
             <button
               onClick={() => {
                 navigate('/auth-test');
@@ -46,7 +46,7 @@ export default function LandingPage() {
             >
               Get Started
             </button>
-          </div>
+          </div> */}
         </div>
       </nav>
 
