@@ -7,6 +7,9 @@ import { NotFoundPage } from './pages/NotFound';
 // import { AuthProvider } from '@/context/auth/authcontext';
 import { useEffect } from 'react';
 import { setupAutoRefresh } from '@/services/Auth/GuestUserAuth';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { queryClient } from '@/lib/queryClient';
 function App() {
   useEffect(() => {
     // Initialize the auth system on app load
@@ -14,6 +17,8 @@ function App() {
   }, []);
   return (
     <> 
+    <QueryClientProvider client={queryClient}>
+
     
     <Router>
       {/* <AuthProvider> */}
@@ -34,6 +39,8 @@ function App() {
       </Routes>
     {/* </AuthProvider> */}
     </Router>
+    <ReactQueryDevtools initialIsOpen={false} position="bottom"/>  
+    </QueryClientProvider>
     </>
   );
 }
