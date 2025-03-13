@@ -37,7 +37,6 @@ export const clearTokens = (): void => {
   console.log("Tokens cleared from memory");
 };
 
-// For non-auth users (guest mode)
 export const getGuestToken = async (): Promise<boolean> => {
   try {
     // Use existing API_KEY and APP_SECRET from environment
@@ -78,40 +77,7 @@ export const getGuestToken = async (): Promise<boolean> => {
 };
 
 // Original auth_api function for authenticated users
-export const auth_api = async (API_KEY: string, APP_SECRET: string): Promise<boolean> => {
-  try {
-    const response = await fetch(AUTH_URL, {
-      method: "POST",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ apiKey: API_KEY, appSecret: APP_SECRET }),
-    });
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    
-    const result = await response.json();
 
-    const accessToken: string | undefined = result?.data?.[0]?.accessToken;
-    const expiryTimestamp: number | undefined = result?.data?.[0]?.expires;
-    
-    if (!accessToken || !expiryTimestamp) {
-      throw new Error("Missing access token or expiry from response");
-    }
-
-    // Store token in memory
-    saveToken(accessToken, expiryTimestamp);
-    
-    console.log("Login successful, token stored in memory");
-    return true;
-  } catch (error) {
-    console.error("Error during login:", error); 
-    return false;
-  }
-};
 
 export const refreshToken = async (): Promise<string | null> => {
   // If a refresh is already in progress, return that promise to prevent multiple refreshes

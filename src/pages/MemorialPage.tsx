@@ -9,8 +9,8 @@ import Gallery from '@/components/Memorial/Sections/Gallery/Gallery';
 import Story from '@/components/Memorial/Sections/Stories/Story';
 import MemorialProgram from '@/components/Memorial/Sections/Program/MemorialProgram';
 import Hymns from '@/components/Memorial/Sections/Hymns/Hymns';
-import { useEffect  } from 'react';
 import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import { NotFoundPage } from './NotFound';
 import Footer from '@/components/global/footer';
 
@@ -26,23 +26,29 @@ const Memorial: React.FC = () => {
     activeButton, 
     currentMemorial, 
     isLoading,
+    isError,
+    error,
     showFullHeader,
-    loadMemorial
+    
   } = useMemorial();
 
   
-  useEffect(() => {
-    if (slug) {
-        loadMemorial(slug);
-    }
-}, [slug, loadMemorial]);
+
   
-if (isLoading) return <p className="text-center text-lg text-gray-600">Loading memorial...</p>;
+  if (isLoading) return (
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+      <motion.div
+        className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full"
+        animate={{ rotate: 360 }}
+        transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+      />
+      <p className="text-primary text-lg font-medium">Loading Memorial...</p>
+    </div>
+  );
+  if (isError) return <div>Error: {error?.message}</div>;
 
 if (!currentMemorial) return (
-  // <p className="text-center text-lg text-red-500">
-  //   Memorial not found. Please check the URL or try again later.
-  // </p>
+
   <NotFoundPage/>
 );
 

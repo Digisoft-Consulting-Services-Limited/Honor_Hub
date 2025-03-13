@@ -7,11 +7,11 @@ import { useMemorial } from '@/context/memorial/MemorialContext';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const { memorials,loadMemorial } = useMemorial(); // Get memorials from context
+  const { memorials } = useMemorial(); // Get memorials from context
   const handleMemorialClick = (slug: string) => {
-    loadMemorial(slug); // Set current memorial in context
-    navigate(`/memorial/memorial/${slug}`); // Navigate to the memorial page
+    navigate(`/memorial/${slug}`); // Navigate to the memorial page
   };
+
 
   return (
     <div className="min-h-screen bg-primary-light">
@@ -102,6 +102,7 @@ const HomePage: React.FC = () => {
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {memorials?.map((memorial) => (
+            
             <div
               key={memorial.slug}
               className="group bg-gradient-to-br from-primary/40 to-primary/40 rounded-2xl overflow-hidden backdrop-blur-sm border border-primary/10 hover:border-primary/20 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10"
@@ -110,15 +111,22 @@ const HomePage: React.FC = () => {
             >
               <div className="relative h-64 overflow-hidden">
                 <img 
-                  src={memorial.imageUrl} 
-                  alt={memorial.name} 
+                  src={memorial.profilePicture } 
+                  alt={memorial.fullName} 
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
               </div>
               <div className="p-6">
-                <h3 className="text-2xl font-semibold mb-2 text-white">{memorial.name}</h3>
-                <p className="text-primary mb-3">{memorial.years}</p>
+                <h3 className="text-2xl font-semibold mb-2 text-white">{memorial.fullName}</h3>
+                <p className="text-primary-light mb-2 font-medium">{memorial.title}</p>
+
+                <div className="text-primary text-sm space-y-1 mb-3">
+                <p>
+                <span className="font-medium">{memorial.dateOfBirth} - {memorial.dateOfPassing} </span>{" "}
+              </p>
+            
+                  </div>
               </div>
             </div>
           ))}
