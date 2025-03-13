@@ -21,62 +21,48 @@ interface MemorialContextType {
   activeButton: string;
   setActiveButton: (button: string) => void;
   currentMemorial: Honoree | null;
-  // loadMemorial: (slug: string) => void;
   isMobileView: boolean;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
-  memorials: Honoree[]; // Add this
+  memorials: Honoree[]; 
   showFullHeader: boolean;
   setShowFullHeader: (show: boolean) => void;
 }
 
 const MemorialContext = createContext<MemorialContextType | undefined>(undefined);
 
-// Sample memorial data
-// const initialMemorials: deceasedName[] = [
-//   {
-//     slug: 'Heri-Wonder-Ochieng',
-//     name: "Heri Wonder Ochieng",
-//     imageUrl: "/img/heri.png",
-//     years: "29/01/2019-23/02/2025"
-//   },
 
-  // Add more memorials as needed
-// ];
 
-export const MemorialProvider: React.FC<{children: ReactNode}> = ({ children }) => {
-  // const [isLoading, setIsLoading] = useState(false);
+export const MemorialProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { slug } = useParams();
 
   const [activeButton, setActiveButton] = useState("LIFE");
   const [isMobileView, setIsMobileView] = useState(false);
   const [showFullHeader, setShowFullHeader] = useState(true);
-  // const [currentMemorial, setCurrentMemorial] = useState<Honoree | null>(null);
-  // const [memorials] = useState<Honoree[]>(initialMemorials);
 
   const generateSlug = useCallback((fullName: string) => {
     return fullName
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-')    // Replace spaces with -
-    .replace(/[^\w-]+/g, '') // Remove all non-word chars
-    .replace(/--+/g, '-')    // Replace multiple - with single
-    .replace(/^-+/, '')      // Trim - from start
-    .replace(/-+$/, '');     
-  },[]);
-  
-  const{
-    data:apiData,
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, '-')   
+      .replace(/[^\w-]+/g, '') 
+      .replace(/--+/g, '-')    
+      .replace(/^-+/, '')      
+      .replace(/-+$/, '');
+  }, []);
+
+  const {
+    data: apiData,
     isLoading,
     isError,
     error
   } = useQuery(
     {
-      queryKey:['memorials'],
+      queryKey: ['memorials'],
       queryFn: getHonoreeList,
       select: (data) => {
-        if (!data)  return [] ;
+        if (!data) return [];
         return data.pageCollection.map(honoree => ({
           title: honoree.title,
           fullName: honoree.fullName,
@@ -89,35 +75,20 @@ export const MemorialProvider: React.FC<{children: ReactNode}> = ({ children }) 
           slug: generateSlug(honoree.fullName)
         }));
       },
-      staleTime: 5 * 60 * 1000, // 5 minutes cache
+      staleTime: 5 * 60 * 1000, 
       refetchOnWindowFocus: false,
     });
-   
-    const memorials = useMemo(() => apiData || [], [apiData]);
-      // Current memorial calculation
 
-      const currentMemorial = useMemo(() => {
-        if (!slug || !memorials) return null;
-        
-        // Find by both generated slug and existing slug property
-        return memorials.find(m => 
-          m.slug === slug || 
-          generateSlug(m.fullName) === slug
-        ) || null;
-      }, [slug, memorials, generateSlug]);
-    
-//   const loadMemorial = (slug: string) => {
-//     // setIsLoading(true);
+  const memorials = useMemo(() => apiData || [], [apiData]);
 
-// //     const found = memorials.find(m => m.slug === slug);
-// // //     if (found) {
-// // //       return true
-// // //     } else {
-// // // return false    }
+  const currentMemorial = useMemo(() => {
+    return memorials.find(m => m.slug === slug || generateSlug(m.fullName) === slug) || null;
 
-//     // setCurrentMemorial(found || null);
-//     // setIsLoading(false);
-// };
+  }, [slug, memorials, generateSlug]);
+
+
+
+
 
 
   useEffect(() => {
@@ -125,7 +96,7 @@ export const MemorialProvider: React.FC<{children: ReactNode}> = ({ children }) 
       const mobile = window.innerWidth < 768;
       setIsMobileView(mobile);
       if (mobile) {
-        setShowFullHeader(activeButton === "LIFE" );
+        setShowFullHeader(activeButton === "LIFE");
       } else {
         setShowFullHeader(true);
       }

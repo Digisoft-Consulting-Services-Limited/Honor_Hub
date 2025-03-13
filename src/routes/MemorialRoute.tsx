@@ -6,14 +6,18 @@ import MemorialForm from "@/components/Memorial/forms/Memorial_form";
 
 const MemorialRoute: React.FC = () => {
     return (
-            <MemorialProvider>
-                <Routes>
-                    <Route path=":slug" element={<Memorial />} /> 
-                    <Route path="create" element={<MemorialForm />} />
-                </Routes>
-                
-        
-            </MemorialProvider>
+        <Routes>
+            <Route path=":slug" element={
+                <MemorialProvider>
+
+                    <Memorial />
+                </MemorialProvider>
+
+            } />
+            <Route path="create" element={<MemorialForm />} />
+        </Routes>
+
+
     );
 };
 
