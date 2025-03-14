@@ -1,11 +1,11 @@
 import { env } from "@/utils/env.config";
-import  {ensureValidToken}  from "../Auth/GuestUserAuth"; // Adjust the path accordingly
+import  {ensureValidToken}  from "../../Auth/GuestUserAuth"; 
 
 
 const BASE_URL = env.BASE_URL
 const BASE_URL_VERSION = env.BASE_URL_VERSION
-const HONOREE_ENDPOINT =  `${BASE_URL}/${BASE_URL_VERSION}/honoree/honorees`;
-interface Honoree {
+const EULOGY_ENDPOINT =  `${BASE_URL}/${BASE_URL_VERSION}/eulogy/eulogyby`;
+interface Eulogy {
     honoreeId: number;
     partnerId: number;
     title: string;
@@ -19,21 +19,21 @@ interface Honoree {
     commands: null;
   }
 
-  interface HonoreeResponse {
+  interface EulogyResponse {
     pageIndex: number;
     pageSize: number;
-    pageCollection: Honoree[];
+    pageCollection: Eulogy[];
     itemsCount: number;
   }
 
-export const getHonoreeList = async ():Promise<HonoreeResponse | null> => {
+export const getEulogyList = async ():Promise<EulogyResponse | null> => {
     try {
         const token = await ensureValidToken();
         if (!token) {
             throw new Error("Authentication failed: No valid token.");
         }
 
-        const response = await fetch(HONOREE_ENDPOINT, {  
+        const response = await fetch(EULOGY_ENDPOINT, {  
             method: "GET",
             headers: {  
                 "Accept": "application/json",  
@@ -46,8 +46,8 @@ export const getHonoreeList = async ():Promise<HonoreeResponse | null> => {
             throw new Error(`API request failed with status ${response.status}`);
         }
 
-        const data: HonoreeResponse = await response.json();
-        // console.log("Honoree details fetched successfully:", data);
+        const data: EulogyResponse = await response.json();
+        console.log("Honoree details fetched successfully:", data);
         return data;
         
     } catch (error) {

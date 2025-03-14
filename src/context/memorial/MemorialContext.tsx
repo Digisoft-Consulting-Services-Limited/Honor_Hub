@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useCallback } from 'react';
 import { getHonoreeList } from '@/services/Memorial/Honoree';
-interface Honoree {
+export interface Honoree {
   title: string;
   fullName: string;
   dateOfBirth: string;
