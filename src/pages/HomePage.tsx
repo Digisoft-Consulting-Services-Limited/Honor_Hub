@@ -2,14 +2,19 @@ import { motion } from "framer-motion";
 import Footer from "@/components/global/footer";
 import Homepage_Navbar from "@/components/home/homepage_navbar";
 import { useNavigate } from "react-router-dom";
-import { useMemorial } from '@/context/memorial/MemorialContext';
+import { useMemorial, Honoree } from '@/context/memorial/MemorialContext';
 
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const { memorials } = useMemorial(); // Get memorials from context
-  const handleMemorialClick = (slug: string) => {
-    navigate(`/memorial/${slug}`); // Navigate to the memorial page
+  const handleMemorialClick = (memorial:Honoree) => {
+    navigate(`/memorial/${memorial.slug}`,{ 
+      state: { slug: memorial.slug ,
+        honoreeId: memorial.honoreeId
+
+      }
+    }); // Navigate to the memorial page
   };
 
 
@@ -106,7 +111,7 @@ const HomePage: React.FC = () => {
             <div
               key={memorial.slug}
               className="group bg-gradient-to-br from-primary/40 to-primary/40 rounded-2xl overflow-hidden backdrop-blur-sm border border-primary/10 hover:border-primary/20 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10"
-              onClick={() => handleMemorialClick(memorial.slug)} // Navigate on click
+              onClick={() => handleMemorialClick(memorial)} // Navigate on click
 
             >
               <div className="relative h-64 overflow-hidden">
