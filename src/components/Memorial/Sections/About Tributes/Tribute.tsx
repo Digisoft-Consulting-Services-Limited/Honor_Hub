@@ -1,5 +1,8 @@
 // import { useState } from 'react';
-import { TributeData } from "@/data/MemorialSectionData/Tribute";
+import { useMemorial } from '@/context/memorial/MemorialContext';
+import { useQuery } from "@tanstack/react-query";
+import { getTributeList } from "@/services/Memorial/Tribute/Tribute";
+// import { TributeData } from "@/data/MemorialSectionData/Tribute";
 // import AddTributeEditor from './AddTribute'; // Import the modal component
 
 const Tribute: React.FC = () => {
@@ -7,7 +10,23 @@ const Tribute: React.FC = () => {
 
   // const openEditor = () => setEditorOpen(true);
   // const closeEditor = () => setEditorOpen(false);
+  const { currentMemorial } = useMemorial();
+  const honoreeId = currentMemorial?.honoreeId;
 
+  const {
+    data: TributeResponse,
+    isLoading,
+    error,
+    isError
+  } = useQuery({
+    queryKey: ['tributes', honoreeId],
+
+    queryFn: () => honoreeId ? getTributeList(honoreeId) : Promise.resolve(null),
+    enabled: !!honoreeId
+
+  })
+  if (isLoading) return <div>Loading Tributes...</div>;
+  if (isError) return <div>Error: {error?.message}</div>;
   return (
     <div className="relative">
       {/* Add Tribute Button for Large Screens */}
@@ -40,29 +59,27 @@ const Tribute: React.FC = () => {
 
       {/* List of Tributes */}
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 p-6">
-        {TributeData.map((tribute, index) => (
+        {TributeResponse?.data?.map((tribute) => (
           <div
-            key={index}
+            key={tribute.tributeId}
             className="bg-primary-light p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
           >
             {/* Header Section */}
             <div className="mb-6 border-b pb-4">
               <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">
-                {tribute.name}
+                {tribute.tributeBy}
               </h2>
-              <p className="text-gray-500 text-sm mt-2">{tribute.date}</p>
+              {/* <p className="text-gray-500 text-sm mt-2">{tribute.date}</p> */}
             </div>
 
             {/* Message Content */}
             <div className="space-y-4 text-gray-700">
-              {tribute.message.map((item, msgIndex) => (
-                <p
-                  key={msgIndex}
-                  className="leading-relaxed text-justify text-sm md:text-base"
-                >
-                  {item}
-                </p>
-              ))}
+
+              <p
+                className="leading-relaxed text-justify text-sm md:text-base"
+              >
+                {tribute.content}
+              </p>
             </div>
           </div>
         ))}
