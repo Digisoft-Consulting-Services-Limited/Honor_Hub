@@ -62,10 +62,3 @@ export const getEulogyList = async (
   }
 };
 
-// Call the service directly with your honoreeId
-getEulogyList(32136706667053056)
-  .then(response => {
-    console.log('API Response:', response);
-    console.log('First Eulogy Title:', response?.data[0]?.title);
-  })
-  .catch(error => console.error('Error:', error));
