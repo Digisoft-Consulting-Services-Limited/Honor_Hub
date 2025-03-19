@@ -1,9 +1,17 @@
 import { ProgramMemorialProps } from "../../types/Memorial/program";
 
 export const programData: ProgramMemorialProps[] = [
-    { time: '9:00AM', title: 'Procession', description: [''] },
-    { time: '9:30AM - 10:00AM', title: 'Presentation', description: ['Music Presentations by choirs'] },
-    { time: '10:00AM - 12:00AM', title: 'Burial Procession', description: ['Opening Hymn','Opening Prayer','Scripture reading ','- Special Item','Tributes','- Relative & Friends','- Church Representatives','Church Service','Special Hymn','Eulogy','- Family Tributes','- Prayers','Vote of Thanks','Procession to the home burial'] },
+    { time: '6:00AM', title: ' Assemble at home Kirai Mang’u', description: [''] },
+    { time: '6:30AM', title: 'Departure to KU Refferal Hospital Funeral Home', description: [''] },
+    { time: '7:30AM', title: 'Arrival at KU Reffral Hospital Funeral Home', description: [''] },
+    { time: '7:45AM', title: 'Body Viewing', description: [''] },
+    { time: '8:00AM', title: 'Departure from KU Refferal Hospital Funeral Home', description: [''] },
+    { time: '9:30AM', title: 'Arrival at St John Catholic Church Mang’u', description: [''] },
+    { time: '10:00AM', title: 'Welcoming Guests', description: [''] },
+    { time: '12:00AM', title: 'Mass Begins', description: [''] },
+
+
+
     // { time: '7:00 AM', title: 'Departure Chiromo', description: 'Journey to Laikipia' },
     // { time: '10:30 AM', title: 'Arrival Laikipia University', description: 'Short break and refreshments' },
     // { time: '11:00 AM', title: 'Arrival at Home', description: 'Final journey home' },

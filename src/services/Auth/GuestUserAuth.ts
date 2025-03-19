@@ -27,7 +27,7 @@ const saveToken = (token: string, expiryTimestamp: number): void => {
   memoryToken = token;
   memoryTokenExpiry = expiry;
   
-  console.log("Token saved to memory cache");
+  // console.log("Token saved to memory cache");
 };
 
 // Clear tokens from memory
@@ -68,7 +68,7 @@ export const getGuestToken = async (): Promise<boolean> => {
     // Store token in memory instead of cookies/localStorage
     saveToken(accessToken, expiryTimestamp);
     
-    console.log("Guest token generated successfully");
+    // console.log("Guest token generated successfully");
     return true;
   } catch (error) {
     console.error("Error getting guest token:", error); 
@@ -170,7 +170,7 @@ export const ensureValidToken = async (): Promise<string | null> => {
     const currentToken = getAccessToken();
     
     if (!currentToken) {
-      console.log("No token found, generating guest token");
+      // console.log("No token found, generating guest token");
       await getGuestToken();
       return getAccessToken();
     }
