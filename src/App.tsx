@@ -16,31 +16,26 @@ function App() {
     setupAutoRefresh();
   }, []);
   return (
-    <> 
-    <QueryClientProvider client={queryClient}>
-
-    
-    <Router>
-      {/* <AuthProvider> */}
-      <Routes>
-        {/* Example top-level route */}
-        <Route path="/*" element={<PagesRoute />} />
+    <>
+      {/* <QueryClientProvider client={queryClient}> */}
 
 
-        {/* Nested routes for memorial features */}
-        <Route path="/memorial/*" element={<MemorialRoute />} />
+      <Router>
+        <Routes>
+          <Route path="/*" element={<PagesRoute />} />
+          <Route path="/memorial/*" element={<MemorialRoute />} />
 
 
-        {/* Nested routes for auth */}
-        <Route path="/auth/*" element={<AuthRoutes />} />
-        {/* <Route path="/auth-test" element={<AuthTest />} /> */}
-        {/* 404 catch-all - MUST BE LAST */}
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    {/* </AuthProvider> */}
-    </Router>
-    <ReactQueryDevtools initialIsOpen={false} position="bottom"/>  
-    </QueryClientProvider>
+          {/* Nested routes for auth */}
+          <Route path="/auth/*" element={<AuthRoutes />} />
+          {/* <Route path="/auth-test" element={<AuthTest />} /> */}
+          {/* 404 catch-all - MUST BE LAST */}
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+        {/* </AuthProvider> */}
+      </Router>
+      <ReactQueryDevtools initialIsOpen={false} position="bottom" />
+      {/* </QueryClientProvider> */}
     </>
   );
 }

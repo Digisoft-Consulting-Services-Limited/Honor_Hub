@@ -18,7 +18,7 @@ export interface Tribute {
 }
 
 
-interface TributeResponse {
+export interface TributeResponse {
     status: {
         code: string;
         message: string;
@@ -32,13 +32,13 @@ interface TributeResponse {
     };
 }
 
-export const getTributeList = async (honoreeId: number): Promise<TributeResponse | null> => {
+export const getTributeList = async (honoreeId: number,page = 1,pageSize = 5): Promise<TributeResponse | null> => {
     try {
         const token = await ensureValidToken();
         if (!token) {
             throw new Error("Authentication failed: No valid token.");
         }
-        const url = `${TRIBUTE_ENDPOINT}?honoreeId=${honoreeId}`;
+        const url = `${TRIBUTE_ENDPOINT}?honoreeId=${honoreeId}&page=${page}&pageSize=${pageSize}`;
 
 
         const response = await fetch(url, {
@@ -50,16 +50,21 @@ export const getTributeList = async (honoreeId: number): Promise<TributeResponse
             }
         });
 
+        
+
         if (!response.ok) {
             throw new Error(`API request failed with status ${response.status}`);
         }
 
         const responseData: TributeResponse = await response.json();
-        console.log("Hymns fetched successfully:", responseData);
+        // console.log("Tributes fetched successfully:", responseData);
+        
+        
         return responseData;
 
+
     } catch (error) {
-        console.error("Error fetching hymns:", error);
+        console.error("Error fetching tributes:", error);
         return null;
     }
 };
