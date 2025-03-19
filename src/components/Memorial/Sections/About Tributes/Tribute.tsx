@@ -1,83 +1,60 @@
-// import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMemorial } from '@/context/memorial/MemorialContext';
 import { useQuery } from "@tanstack/react-query";
 import { getTributeList } from "@/services/Memorial/Tribute/Tribute";
-// import { TributeData } from "@/data/MemorialSectionData/Tribute";
-// import AddTributeEditor from './AddTribute'; // Import the modal component
-
 const Tribute: React.FC = () => {
-  // const [isEditorOpen, setEditorOpen] = useState(false);
-
-  // const openEditor = () => setEditorOpen(true);
-  // const closeEditor = () => setEditorOpen(false);
   const { currentMemorial } = useMemorial();
   const honoreeId = currentMemorial?.honoreeId;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5); // Match the default pageSize in service
+
+  // Reset to first page when memorial changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [honoreeId]);
 
   const {
     data: TributeResponse,
     isLoading,
+    isFetching,
     error,
     isError
   } = useQuery({
-    queryKey: ['tributes', honoreeId],
+    queryKey: ['tributes', honoreeId, currentPage, itemsPerPage],
+    queryFn: () => honoreeId ? 
+      getTributeList(honoreeId, currentPage, itemsPerPage) : 
+      Promise.resolve(null),
+    enabled: !!honoreeId,
+    // keepPreviousData: true
+  });
+  console.log("Tribute Response:", TributeResponse);
 
-    queryFn: () => honoreeId ? getTributeList(honoreeId) : Promise.resolve(null),
-    enabled: !!honoreeId
 
-  })
+  // Calculate pagination details
+  const totalItems = TributeResponse?.paging?.count || 0;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  
+
   if (isLoading) return <div>Loading Tributes...</div>;
   if (isError) return <div>Error: {error?.message}</div>;
+
   return (
     <div className="relative">
-      {/* Add Tribute Button for Large Screens */}
-      {/* <div className="hidden md:block  flex items-center justify-between bg-primary-light p-4 rounded-md">
-  <p className="text-primary-text_black font-medium">
-    Share a special moment from Bernard's life.
-  </p>
-  <button
-    onClick={openEditor}
-    className="flex items-center gap-2 border border-primary-text_black text-primary-text_black px-4 py-2 rounded-md hover:bg-primary-hover_light transition-colors"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-5 w-5"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M12 4v16m8-8H4"
-      />
-    </svg>
-    Write a story
-  </button>
-</div> */}
-
-
-      {/* List of Tributes */}
+      {/* Tribute List */}
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 p-6">
         {TributeResponse?.data?.map((tribute) => (
           <div
             key={tribute.tributeId}
             className="bg-primary-light p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
           >
-            {/* Header Section */}
             <div className="mb-6 border-b pb-4">
               <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">
                 {tribute.tributeBy}
               </h2>
-              {/* <p className="text-gray-500 text-sm mt-2">{tribute.date}</p> */}
             </div>
-
-            {/* Message Content */}
             <div className="space-y-4 text-gray-700">
-
-              <p
-                className="leading-relaxed text-justify text-sm md:text-base"
-              >
+              <p className="leading-relaxed text-justify text-sm md:text-base">
                 {tribute.content}
               </p>
             </div>
@@ -85,30 +62,43 @@ const Tribute: React.FC = () => {
         ))}
       </div>
 
-      {/* Pencil Icon for Small Screens */}
-      {/* <div className="fixed bottom-4 right-4 md:hidden">
-        <button
-          onClick={openEditor}
-          className="p-3 bg-primary text-primary-light rounded-full shadow-lg hover:bg-primary-hover_light transition-colors"
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+      {/* Pagination Controls */}
+      {totalItems > itemsPerPage && (
+        <div className="flex justify-center items-center gap-4 my-6">
+          <button
+            className="px-4 py-2 bg-gray-100 rounded-md disabled:opacity-50 hover:bg-gray-200 transition-colors"
+            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+            disabled={currentPage === 1 || isFetching}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-            />
-          </svg>
-        </button>
-      </div> */}
+            Previous
+          </button>
+          
+          <span className="text-gray-600">
+            Page {currentPage} of {totalPages}
+          </span>
 
-      {/* Add Tribute Editor Modal */}
-      {/* <AddTributeEditor isOpen={isEditorOpen} onClose={closeEditor} /> */}
+          <button
+            className="px-4 py-2 bg-gray-100 rounded-md disabled:opacity-50 hover:bg-gray-200 transition-colors"
+            onClick={() => setCurrentPage(p => p + 1)}
+            disabled={currentPage >= totalPages || isFetching}
+          >
+            Next
+          </button>
+
+          {isFetching && (
+            <div className="text-gray-500 text-sm">
+              Loading...
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Empty State */}
+      {!isLoading && TributeResponse?.data?.length === 0 && (
+        <div className="text-center py-8 text-gray-500">
+          No tributes found for this memorial
+        </div>
+      )}
     </div>
   );
 };

@@ -43,6 +43,12 @@ const Footer = () => {
   >
     Sally
   </a>
+  <a
+    href="https://www.digisoftke.com/"
+    className="text-blue-400 hover:text-blue-500 hover:underline transition duration-300 text-bold"
+  >
+    DigiSoft Technologies
+  </a>
 </p>
 </div>
 </footer>
