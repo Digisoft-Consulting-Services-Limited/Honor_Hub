@@ -17,7 +17,7 @@ function App() {
   }, []);
   return (
     <>
-      {/* <QueryClientProvider client={queryClient}> */}
+      <QueryClientProvider client={queryClient}>
 
 
       <Router>
@@ -35,7 +35,7 @@ function App() {
         {/* </AuthProvider> */}
       </Router>
       <ReactQueryDevtools initialIsOpen={false} position="bottom" />
-      {/* </QueryClientProvider> */}
+      </QueryClientProvider>
     </>
   );
 }

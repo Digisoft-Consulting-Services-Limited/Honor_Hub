@@ -12,7 +12,6 @@ export const programData: ProgramMemorialProps[] = [
 
 
 
-    { time: '10:00AM - 12:00AM', title: 'Burial Procession', description: ['Opening Hymn','Opening Prayer','Scripture reading ','- Special Item','Tributes','- Relative & Friends','- Church Representatives','Church Service','Special Hymn','Eulogy','- Family Tributes','- Prayers','Vote of Thanks','Procession to the home burial'] },
     // { time: '7:00 AM', title: 'Departure Chiromo', description: 'Journey to Laikipia' },
     // { time: '10:30 AM', title: 'Arrival Laikipia University', description: 'Short break and refreshments' },
     // { time: '11:00 AM', title: 'Arrival at Home', description: 'Final journey home' },
