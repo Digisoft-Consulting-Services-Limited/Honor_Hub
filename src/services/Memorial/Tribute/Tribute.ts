@@ -32,13 +32,13 @@ export interface TributeResponse {
     };
 }
 
-export const getTributeList = async (honoreeId: number,page = 1,pageSize = 5): Promise<TributeResponse | null> => {
+export const getTributeList = async (honoreeId: number): Promise<TributeResponse | null> => {
     try {
         const token = await ensureValidToken();
         if (!token) {
             throw new Error("Authentication failed: No valid token.");
         }
-        const url = `${TRIBUTE_ENDPOINT}?honoreeId=${honoreeId}&page=${page}&pageSize=${pageSize}`;
+        const url = `${TRIBUTE_ENDPOINT}?honoreeId=${honoreeId}`;
 
 
         const response = await fetch(url, {

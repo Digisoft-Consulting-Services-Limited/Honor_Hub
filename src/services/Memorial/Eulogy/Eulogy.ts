@@ -54,7 +54,7 @@ export const getEulogyList = async (
     }
 
     const responseData: EulogyResponse = await response.json();
-    console.log("Eulogy data fetched successfully:", responseData);
+    // console.log("Eulogy data fetched successfully:", responseData);
     return responseData;
   } catch (error) {
     console.error("Error fetching eulogy data:", error);
