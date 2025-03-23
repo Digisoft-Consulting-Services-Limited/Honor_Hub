@@ -5,8 +5,9 @@ import { getTributeList } from "@/services/Memorial/Tribute/Tribute";
 const Tribute: React.FC = () => {
   const { currentMemorial } = useMemorial();
   const honoreeId = currentMemorial?.honoreeId;
+  
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5); // Match the default pageSize in service
+  const itemsPerPage = 5;
 
   // Reset to first page when memorial changes
   useEffect(() => {
@@ -20,20 +21,24 @@ const Tribute: React.FC = () => {
     error,
     isError
   } = useQuery({
-    queryKey: ['tributes', honoreeId, currentPage, itemsPerPage],
+    queryKey: ['tributes', honoreeId],
     queryFn: () => honoreeId ? 
-      getTributeList(honoreeId, currentPage, itemsPerPage) : 
+      getTributeList(honoreeId ) : 
       Promise.resolve(null),
     enabled: !!honoreeId,
-    // keepPreviousData: true
   });
-  console.log("Tribute Response:", TributeResponse);
+  // console.log("Tribute Response:", TributeResponse);
 
 
   // Calculate pagination details
-  const totalItems = TributeResponse?.paging?.count || 0;
+  const totalItems = TributeResponse?.data?.length || 0;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
+  // Slice data for pagination
+  const paginatedData = TributeResponse?.data?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  ) || [];
   
 
   if (isLoading) return <div>Loading Tributes...</div>;
@@ -43,7 +48,7 @@ const Tribute: React.FC = () => {
     <div className="relative">
       {/* Tribute List */}
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 p-6">
-        {TributeResponse?.data?.map((tribute) => (
+        {paginatedData.map((tribute) => (
           <div
             key={tribute.tributeId}
             className="bg-primary-light p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
@@ -74,7 +79,7 @@ const Tribute: React.FC = () => {
           </button>
           
           <span className="text-gray-600">
-            Page {currentPage} of {totalPages}
+            {currentPage} of {totalPages}
           </span>
 
           <button
@@ -87,7 +92,7 @@ const Tribute: React.FC = () => {
 
           {isFetching && (
             <div className="text-gray-500 text-sm">
-              Loading...
+              Loading Tributes...
             </div>
           )}
         </div>
