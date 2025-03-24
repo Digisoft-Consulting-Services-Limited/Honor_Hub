@@ -57,7 +57,7 @@ const MemorialProgram: React.FC = () => {
                   </h3>
                 <div className="flex items-center gap-4 mb-2">
                   <span className="text-sm font-light text-gray-700">
-                    {startTime} - {endTime} {startPeriod}
+                    {startTime} {startPeriod} - {endTime} {endPeriod}
                   </span>
                 
                 </div>
