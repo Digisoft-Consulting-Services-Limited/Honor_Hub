@@ -8,15 +8,15 @@ const Life: React.FC = () => {
   const { currentMemorial } = useMemorial();
   const honoreeId = currentMemorial?.honoreeId;
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
-      useEffect(() => {
-        setCurrentPage(1);
-      }, [honoreeId]);
-    
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [honoreeId]);
 
-  const { 
+
+  const {
     data: eulogyResponse,
     isLoading,
     isError,
@@ -53,23 +53,23 @@ const Life: React.FC = () => {
         </div>
       ))}
 
-{totalItems > itemsPerPage && (
+      {totalItems > itemsPerPage && (
         <div className="flex justify-center items-center gap-4 my-6">
-            <button
+          <button
             className="px-4 py-2 bg-gray-100 rounded-md disabled:opacity-50 hover:bg-gray-200 transition-colors"
             onClick={() => setCurrentPage((p: number) => Math.max(1, p - 1))}
             disabled={currentPage === 1 || isFetching}
-            >
+          >
             Previous
-            </button>
-          
+          </button>
+
           <span className="text-gray-600">
             {currentPage} of {totalPages}
           </span>
 
           <button
             className="px-4 py-2 bg-gray-100 rounded-md disabled:opacity-50 hover:bg-gray-200 transition-colors"
-            onClick={() => setCurrentPage((p:number) => p + 1)}
+            onClick={() => setCurrentPage((p: number) => p + 1)}
             disabled={currentPage >= totalPages || isFetching}
           >
             Next
