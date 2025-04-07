@@ -43,6 +43,8 @@ const Footer = () => {
   >
     Sally
   </a>
+  <span className="mx-1">|</span>
+  <br />
   <a
     href="https://www.digisoftke.com/"
     className="text-blue-400 hover:text-blue-500 hover:underline transition duration-300 text-bold"
