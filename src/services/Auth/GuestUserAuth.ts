@@ -170,7 +170,6 @@ export const ensureValidToken = async (): Promise<string | null> => {
     const currentToken = getAccessToken();
     
     if (!currentToken) {
-      // console.log("No token found, generating guest token");
       await getGuestToken();
       return getAccessToken();
     }
