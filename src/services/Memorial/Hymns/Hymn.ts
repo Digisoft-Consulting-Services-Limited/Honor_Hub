@@ -55,7 +55,7 @@ export const getHymnList = async (honoreeId: number): Promise<HymnResponse | nul
     }
 
     const responseData: HymnResponse = await response.json();
-    console.log("Hymns fetched successfully:", responseData);
+    // console.log("Hymns fetched successfully:", responseData);
     return responseData;
     
   } catch (error) {

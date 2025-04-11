@@ -21,7 +21,7 @@ const AddTributeEditor: React.FC<AddTributeEditorProps> = ({
   const [content, setContent] = useState<string>("");
   const [tributeBy, setTributeBy] = useState<string>("");
   // const [ createdBy, setCreatedBy ] = useState<string>("");
-  const { mutate: createTribute, isLoading } = useCreateTribute();
+  const { mutate: createTribute } = useCreateTribute();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -104,10 +104,8 @@ return (
           </button>
           <button
             type="submit"
-            disabled={isLoading}
             className="bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-hover_light hover:text-primary-text_black transition-colors"
           >
-            {isLoading ? 'Creating...' : 'Create Tribute'}
           </button>
         </div>
       </form>
