@@ -12,7 +12,7 @@ export interface Tribute {
     content: string;
     tributeBy: string;
     createdBy: string;
-    modifiedBy: string | null;
+    modifiedBy?: string | null;
     commands: string;
 
 }
