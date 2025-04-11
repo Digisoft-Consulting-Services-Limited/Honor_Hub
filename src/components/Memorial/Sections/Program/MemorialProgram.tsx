@@ -17,7 +17,8 @@ const MemorialProgram: React.FC = () => {
     enabled: !!honoreeId
   });
 
-  if (isLoading) return <div>Loading eulogies...</div>;
+  if (isLoading) return <div>Loading programs...</div>;
+  
   if (isError) return <div>Error: {error?.message}</div>;
 
   const formatToLocalTime = (time: string) => {
