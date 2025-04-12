@@ -12,6 +12,7 @@ export interface Tribute {
     content: string;
     tributeBy: string;
     createdBy: string;
+    createdAt: Date;
     modifiedBy?: string | null;
     commands: string;
 
