@@ -42,10 +42,15 @@ const Tribute: React.FC = () => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   // Slice data for pagination
-  const paginatedData = TributeResponse?.data?.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  ) || [];
+  const sortedData = TributeResponse?.data
+  ?.slice() // make a shallow copy to avoid mutating original data
+  ?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || [];
+
+// Then paginate
+const paginatedData = sortedData.slice(
+  (currentPage - 1) * itemsPerPage,
+  currentPage * itemsPerPage
+);
   
 
   if (isLoading) return <div>Loading Tributes...</div>;
