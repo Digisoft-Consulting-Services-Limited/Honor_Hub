@@ -105,7 +105,7 @@ export default function LandingPage() {
                   transition={{ duration: 0.3 }}
                 >
                   <img 
-                    src="/img/sun.jpg" 
+                    src="/img/sun.webp" 
                     alt="Memorial example"
                     className="w-full h-full object-cover"
                     loading='lazy'
@@ -123,7 +123,7 @@ export default function LandingPage() {
                   <div className="w-6/7 transform rotate-1 -mt-6">
                     <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl">
                       <img
-                        src="/img/memorial.png"
+                        src="/img/memorial.webp"
                         alt="Candle memorial"
                         className="w-full h-full object-cover"
                         loading='lazy'
