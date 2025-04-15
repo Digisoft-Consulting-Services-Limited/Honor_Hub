@@ -55,7 +55,7 @@ export const getProgramList = async (honoreeId: number): Promise<ProgramResponse
     }
 
     const responseData: ProgramResponse = await response.json();
-    console.log("Programs fetched successfully:", responseData);
+    // console.log("Programs fetched successfully:", responseData);
     return responseData;
     
   } catch (error) {
