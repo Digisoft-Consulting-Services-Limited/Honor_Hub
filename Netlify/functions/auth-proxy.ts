@@ -1,5 +1,7 @@
 import { Handler } from '@netlify/functions';
 import fetch from 'node-fetch';
+import { ApiError,TokenResponse } from './types';
+
 import { env } from "../../src/utils/env.config";
 
 const BASE_URL = env.BASE_URL;
@@ -14,15 +16,9 @@ interface AuthRequestBody {
   appSecret: string;
 }
 
-interface ApiError {
-  error: string;
-}
 
-interface TokenResponse {
-  accessToken: string;
-  refreshToken: string;
-  expiresIn: number;
-}
+
+
 
 export const handler: Handler = async () => {
   try {
