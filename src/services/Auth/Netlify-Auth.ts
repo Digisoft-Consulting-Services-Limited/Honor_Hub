@@ -2,17 +2,18 @@
 import { TokenResponse } from '../../../Netlify/functions/types';
 const TOKEN_REFRESH_MARGIN = 30000; // 30 seconds
 const AUTH_URL = '/.netlify/functions/auth-proxy';
-const REFRESH_URL = '/.netlify/functions/refresh-token';
+const REFRESH_URL = '/.netlify/functions/refresh';
 
 class AuthManager {
   private accessToken: string | null = null;
   private refreshToken: string | null = null;
   private tokenExpiry: number | null = null;
   private refreshPromise: Promise<string> | null = null;
+  private isAutoRefreshSetup = false;
 
   constructor() {
     this.initializeFromSession();
-    this.setupAutoRefresh();
+    // this.setupAutoRefresh();
   }
 
   private initializeFromSession(): void {
@@ -48,7 +49,7 @@ class AuthManager {
       const data = await response.json() as TokenResponse;
       return this.handleNewTokens(data);
     } catch (error) {
-      console.error('Guest token initialization failed:', error);
+      console.error('Auth Failed:', error);
       throw error;
     }
   }
@@ -99,27 +100,29 @@ class AuthManager {
     return this.accessToken;
   }
 
-  private setupAutoRefresh(): void {
+ 
+
+  // This method will now be called from the useEffect in App.js
+  public setupAutoRefreshAndFetchOverride(): void {
+    if (this.isAutoRefreshSetup || typeof window === 'undefined') {
+      return;
+    }
+
     setInterval(async () => {
       if (this.tokenExpiry && Date.now() > this.tokenExpiry - TOKEN_REFRESH_MARGIN) {
         await this.refreshAccessToken();
       }
     }, 60000); // Check every minute
 
-    if (typeof window !== 'undefined') {
-      const originalFetch = window.fetch;
-      
-      window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
-        const token = await this.getAccessToken();
-        const headers = new Headers(init?.headers);
-        headers.set('Authorization', `Bearer ${token}`);
-        
-        return originalFetch(input, {
-          ...init,
-          headers
-        });
-      };
-    }
+    const originalFetch = window.fetch;
+    window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+      const token = await this.getAccessToken();
+      const headers = new Headers(init?.headers);
+      headers.set('Authorization', `Bearer ${token}`);
+      return originalFetch(input, { ...init, headers });
+    };
+
+    this.isAutoRefreshSetup = true;
   }
 }
 

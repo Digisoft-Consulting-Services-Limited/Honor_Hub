@@ -6,9 +6,11 @@
 
 [build]
   command = "npm run build"
-  functions = "netlify/functions"
+  functions = "Netlify/functions"
   publish = "dist"
 
 [dev]
   framework = "#static"
   targetPort = 5173
+  functions = "Netlify/functions"
+
