@@ -7,20 +7,12 @@ import { NotFoundPage } from './pages/NotFound';
 import { useEffect } from 'react';
 import { setupAutoRefresh } from '@/services/Auth/GuestUserAuth';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from '@/lib/queryClient';
-// import { authManager } from '@/services/Auth/Netlify-Auth';
 
 
 function App() {
-  // useEffect(() => {
-  //   authManager.setupAutoRefreshAndFetchOverride();
-
-  //   // Optional cleanup (though less critical in a SPA)
-  //   return () => {
-  //     // You might not need to do anything specific here for fetch override
-  //   };
-  // }, []);
+ 
   useEffect(() => {
     // Initialize the auth system on app load
     setupAutoRefresh();
@@ -46,7 +38,7 @@ function App() {
         </Routes>
         {/* </AuthProvider> */}
       </Router>
-      <ReactQueryDevtools initialIsOpen={true} position="bottom" />
+      {/* <ReactQueryDevtools initialIsOpen={false} position="bottom" /> */}
       </QueryClientProvider>
     </>
   );
