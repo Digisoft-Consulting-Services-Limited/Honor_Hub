@@ -12,6 +12,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
+    "types": ["jest", "node", "vite/client", "@testing-library/jest-dom"],
     "paths": {
       "@/*": ["src/*"]
     },  // This is correct for React 17+
@@ -23,5 +24,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src","Netlify/functions/**/*"]
+  "include": ["src"]
 }

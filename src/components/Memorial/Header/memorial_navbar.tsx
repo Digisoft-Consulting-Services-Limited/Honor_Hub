@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightFromBracket,faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket,faAngleDown,faFireFlameSimple } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom"; 
 
 interface AccountImageProps {
@@ -35,7 +35,10 @@ const NavbarSidebar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
       <nav className="bg-primary text-primary-light flex items-center justify-between px-4 py-3 shadow-md">
   {/* Logo */}
   <h1 className="text-xl  pl-9 font-bold" onClick={() => navigate('/home')}
-  >HonorHub</h1>
+   >
+     <span><FontAwesomeIcon icon={faFireFlameSimple} /> </span>
+     <span className="text-primary-light_yellow">HonorHub</span>
+   </h1>
   {/* Hamburger button for mobile */}
   <button
     className="flex flex-col gap-1.5 md:hidden"
@@ -49,8 +52,8 @@ const NavbarSidebar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
   {/* Right-aligned navigation links */}
   <div className="hidden md:flex items-center gap-6 pr-6"> {/* Hidden on mobile */}
     <ul className="flex space-x-6">
-      <li className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow cursor-pointer">Create a New Website</li>
-      <li className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow cursor-pointer">Invite Others</li>
+      {/* <li className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow cursor-pointer">Create a New Website</li>
+      <li className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow cursor-pointer">Invite Others</li> */}
       <li
   className="hover:text-gray-300 hover:underline hover:decoration-primary-light_yellow   cursor-pointer  "
 >
@@ -124,9 +127,9 @@ const NavbarSidebar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
             <li className="hover:bg-primary-hover_light p-2 rounded cursor-pointer">
               Visited Memorials
             </li>
-            <li className="hover:bg-primary-hover_light p-2 rounded cursor-pointer">
+            {/* <li className="hover:bg-primary-hover_light p-2 rounded cursor-pointer">
               Create a New Website
-            </li>
+            </li> */}
             <li className="hover:bg-primary-hover_light p-2 rounded cursor-pointer">
               Share with a Friend
             </li>

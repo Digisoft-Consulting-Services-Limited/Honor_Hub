@@ -1,6 +1,9 @@
 import { env } from "@/utils/env.config";
 import { ensureValidToken } from "../../Auth/GuestUserAuth";
 
+
+
+
 const BASE_URL = env.BASE_URL;
 const BASE_URL_VERSION = env.BASE_URL_VERSION;
 const EULOGY_ENDPOINT = `${BASE_URL}/${BASE_URL_VERSION}/eulogy/eulogyByHonoreeId`;
