@@ -12,7 +12,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "types": ["jest", "node", "vite/client", "@testing-library/jest-dom"],
+    "types": ["jest", "node", "vite/client"],
     "paths": {
       "@/*": ["src/*"]
     },  // This is correct for React 17+
