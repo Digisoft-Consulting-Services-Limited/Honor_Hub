@@ -2,6 +2,8 @@ import { HeartIcon } from "@heroicons/react/24/outline";
 import Footer from "@/components/global/footer";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { easeOut } from "framer-motion";
+
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -13,7 +15,7 @@ export default function LandingPage() {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: "easeOut"
+        ease: easeOut
       }
     }
   };
@@ -25,7 +27,7 @@ export default function LandingPage() {
       opacity: 1,
       transition: {
         duration: 0.8,
-        ease: "easeOut",
+        ease: easeOut,
         delay: 0.2
       }
     }
