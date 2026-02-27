@@ -21,6 +21,38 @@ const MemorialProgram: React.FC = () => {
   
   if (isError) return <div>Error: {error?.message}</div>;
 
+  // Handle no memorial selected
+  if (!currentMemorial || !honoreeId) {
+    return (
+      <div className="mx-auto px-4 py-8 bg-primary-light rounded-lg shadow-md">
+        <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+          Memorial Program
+        </h2>
+        <div className="text-center py-12">
+          <p className="text-gray-600 text-lg">
+            Please select a memorial to view the program details.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Handle no programs available
+  if (!programResponse?.data || programResponse.data.length === 0) {
+    return (
+      <div className="mx-auto px-4 py-8 bg-primary-light rounded-lg shadow-md">
+        <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+          Memorial Program
+        </h2>
+        <div className="text-center py-12">
+          <p className="text-gray-600 text-lg">
+            No program information is currently available for this memorial.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   const formatToLocalTime = (time: string) => {
     const date = new Date(time);
     const hours = date.getHours();
@@ -39,7 +71,7 @@ const MemorialProgram: React.FC = () => {
       <div className="relative">
         <div className="absolute left-4 top-0 w-1 h-full bg-primary-light transform -translate-x-1/2"></div>
 
-        {programResponse?.data.map((program) => {
+        {programResponse.data.map((program) => {
           const { formattedTime: startTime, period: startPeriod } = formatToLocalTime(program.startTime);
           const { formattedTime: endTime, period: endPeriod } = formatToLocalTime(program.endTime);
 
@@ -53,16 +85,14 @@ const MemorialProgram: React.FC = () => {
               </div>
 
               <div className="bg-primary-hover_light p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border-l-4 border-primary">
-              <h3 className="text-xl font-semibold text-gray-800">
-                    {program.title}
-                  </h3>
+                <h3 className="text-xl font-semibold text-gray-800">
+                  {program.title}
+                </h3>
                 <div className="flex items-center gap-4 mb-2">
                   <span className="text-sm font-light text-gray-700">
                     {startTime} {startPeriod} - {endTime} {endPeriod}
                   </span>
-                
                 </div>
-               
 
                 <p className="text-gray-600 pl-2 border-l-2 border-gray-200 ml-4">
                   <span className="block mb-2">
