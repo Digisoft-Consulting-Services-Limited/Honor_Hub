@@ -57,7 +57,7 @@ const Memorial: React.FC = () => {
     switch (activeButton) {
       case "TRIBUTES": return <Tribute />;
       case "LIFE": return <Life />;
-      case "GALLERY": return <Gallery />;
+      // case "ALBUM": return <Gallery />;
       case "STORIES": return <Story />;
       case "PROGRAM": return <MemorialProgram />;
       case "HYMNS": return <Hymns />;
