@@ -4,10 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "next:dev": "next dev",
+    "next:build": "next build",
+    "next:start": "next start"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -31,6 +30,7 @@
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^1.8.0",
+    "next": "^16.2.4",
     "node-fetch": "^3.3.2",
     "postcss": "^8.5.10",
     "react": "^19.2.5",
