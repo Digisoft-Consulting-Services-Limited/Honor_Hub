@@ -1,19 +1,97 @@
-export default function Memorial() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-6">
-      <h1 className="text-3xl font-bold mb-4">
-        Welcome to My App 👋
-      </h1>
+// Memorial.tsx
+import { useMemorial } from '@/context/memorial/MemorialContext';
+import Middle_Navbar from '@/components/Memorial/MiddleNavbar/MiddleNavbar';
+import ProfileHeader from '@/components/Memorial/Header/profile_header';
+import Memorial_Navbar from '@/components/Memorial/Header/memorial_navbar';
+import Tribute from '@/components/Memorial/Sections/About Tributes/Tribute';
+import Life from '@/components/Memorial/Sections/Life/Life';
+// import Gallery from '@/components/Memorial/Sections/Gallery/Gallery';
+import Story from '@/components/Memorial/Sections/Stories/Story';
+import MemorialProgram from '@/components/Memorial/Sections/Program/MemorialProgram';
+import Hymns from '@/components/Memorial/Sections/Hymns/Hymns';
+// import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
+import { NotFoundPage } from '../../../pages/NotFound';
+import Footer from '@/components/global/footer';
 
-      <p className="text-gray-600 text-center max-w-md">
-        This is a simple homepage built with Next.js. Start editing
-        <code className="bg-gray-100 px-1 mx-1 rounded">page.tsx</code>
-        to customize it.
-      </p>
 
-      <button className="mt-6 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800">
-        Get Started
-      </button>
-    </main>
+
+const Memorial: React.FC = () => {
+  // const { slug } = useParams<{ slug: string }>(); // Get slug from URL
+
+
+
+
+  const {
+    activeButton,
+    currentMemorial,
+    isLoading,
+    isError,
+    error,
+    showFullHeader,
+
+  } = useMemorial();
+
+
+
+
+  if (isLoading) return (
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+      <motion.div
+        className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full"
+        animate={{ rotate: 360 }}
+        transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+      />
+      <p className="text-primary text-lg font-medium">Loading Memorial...</p>
+    </div>
   );
-}
+  if (isError) return <div>Error: {error?.message}</div>;
+
+  if (!currentMemorial) return (
+
+    <NotFoundPage />
+  );
+
+
+  const renderPageContent = () => {
+    switch (activeButton) {
+      case "TRIBUTES": return <Tribute />;
+      case "LIFE": return <Life />;
+      // case "ALBUM": return <Gallery />;
+      case "STORIES": return <Story />;
+      case "PROGRAM": return <MemorialProgram />;
+      case "HYMNS": return <Hymns />;
+      default: return <Tribute />;
+    }
+  };
+
+  return (
+    <>
+      <Memorial_Navbar
+        name='Guest'
+        imageUrl="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAALVBMVEXQ0NCxsbG0tLTPz8/Hx8e3t7fAwMDMzMy9vb21tbW6urrBwcGurq7FxcXT09M4BFhyAAAE60lEQVR4nO2dW5OjIBCFVUSNEv7/z92YzQVjVIRmOKTO97IPUzXl2Ya+QNNTVYQQQgghhBBCCCGEEEIIIYQQQgghhBCSBDuT+yNSYfvrMF60voxD16rfk9kOTW3qN2Of+4tE6Qfjqrtj6jb3Z4nR6k91Lzv+wlq1alyZ781UvkQ17Oi7LVWd+wMjsdc9eXcuRXuc3QX6kqhyf2Ywtj+Wd6dUiXZ/BzroMiV6rdAHo6rK86l9461vptFDW5RK2/ob0DFlQW71GiJwjo6lJHJTmMBZYxF2tOECZ1r47RgpsDZDbgVHRAqcJUJb0U6R+tAl2i7WgneJ19w6toleog9QPWpYoP9Gk1vKBq2Qvts67XJr+YpvteQlEbLeEBRY14hG3DpRC+OSW84a74LXD8CIcR1FFdaAYd/2ohoBl2l1urLfBzPqWzl3A7gR7whKRIwXM3JhH7VOtIOUwjG3lC3EjAir0Er5U1iFlVRURN2HtyqYCj2ZcgvZREihwcxpZqRs+PMKgW/4j+/uvUBN2m50MgpxF6lQPARepDIKDfJNokjq3eCdYbyR2IfQJhSJFrhZ94xEtIA88X4TfXCKvUZvBWKsMzVXZDdTqU7HlsAdtMDqEn+4rzvgfKbqZW4vgDei0C0wcHEodc+Ne4QhpVDjehsZgcgKhc4SgRUGNl5+AlzhyxzqI+dtMtdrqB1DdyRKC9Tb0QcCCrGrp+jSoobsw1gQrxA3Z/tPdAsmcDB8ECsR3YTV/Gp0/SrWE2Ma4FjoEhj5p74AAz4IO8vADoQLwhoWkLO1FWFhsZw1GlgLN9DJzCchCnEPL74QVGSUtA2DDhbxk5klp30N8Bnid9RZheglxZqT7hSzs3uXk48tS1ujM6eq4bL86JMTHcNlCpyfXP64QO+4X54bfeIbMZBboPbx9qZFpdwu3p4GtyP4AO83e0VVFQt8K4zCwr1V7yklXvqeFxW2A75Wc5hHmL1vjzys+Jqi0Jcxiq+de2rMq+/neM6CeTXqzfmB0eCj+Npnz9BrZ9m22df4+s9QT8W4Gq1ycm0nxO3lbs1rIo2TAA2gGvtFcFhc5G5pbJx8zV3OZsDbj7b/DO+LVEy1w+diNbU7GMp+NDmgTY2yrV5vtuXxp1X9NOra/KcZh9ZdinY9VcM0Hc5i3XImX6c+9e06vm95XAhDWrVaf8528kypN0OKye51bHuQXXsY4Sie6GvGycqbI3TfXA4GlNneI+3JZEjV1T61gzHdzlrtv7iob78kw91wf2K8Za2nfj360Vbt5N82bS5/q/FgQvAXmrG7OVH74OZRp20PtaFR/+FEvoi3P3oc7xsvqJmh+aNCUuiNYQjmL847lJ9vSCUx/VReuaFlgaQ+ehR6UhFF0s0oNlcvhpRWPH3tmYSU4zFlp7IFk661SGR6pwTJOm9yC3uTKCxmjPSfJDJiblkuSdoYgUyYpnVDSY7UiyZFf1H2dG1JgkscsVFsMsh3wWEt0hTLFCHldpHPa4SGB8khvhGFh8zGMwpvRJtb0BpZgXDbsBYvhOG2obhCqUlzckg7UzhHI518i80lFUQ2XGAc0CyRVSj5lw+kkM1MIU4RP6DCc0DV9w+o8BSC4+TlED2q+X2FlW7wEL5JVM4/u7/53A9VxA9hWsIIIYQQQgghhBBCCCGEEEIIIYQQQgghOPwDhx9CCdDcDFsAAAAASUVORK5CYII="
+      />
+
+      {showFullHeader && (
+        <ProfileHeader />
+      )}
+
+      <div className="">
+        <Middle_Navbar />
+      </div>
+
+      <div className="container mx-auto px-6 py-12 flex">
+        {renderPageContent()}
+        {/* <SecondColumn /> */}
+      </div>
+      <Footer />
+    </>
+  );
+};
+
+
+export default Memorial
+
+
+
+
