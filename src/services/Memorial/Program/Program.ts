@@ -1,9 +1,8 @@
-import { env } from "@/utils/env.config"
-import { ensureValidToken } from "../../Auth/GuestUserAuth";
+import { apiFetch } from "../../../lib/apiFetch";
 
-const BASE_URL = env.BASE_URL;
-const BASE_URL_VERSION = env.BASE_URL_VERSION;
-const PROGRAM_ENDPOINT =  `${BASE_URL}/${BASE_URL_VERSION}/honoreeProgram/honoreesProgramByHonoreeId`;
+const BASE_URL = process.env.BASE_URL;
+const BASE_URL_VERSION = process.env.BASE_URL_VERSION;
+const PROGRAM_ENDPOINT = `${BASE_URL}/${BASE_URL_VERSION}/honoreeProgram/honoreesProgramByHonoreeId`;
 
 export interface Program {
   honoreeProgramId: number;
@@ -17,14 +16,12 @@ export interface Program {
   modifiedBy: string | null;
 }
 
-
 interface ProgramResponse {
   status: {
     code: string;
     message: string;
   };
   data: Program[];
-
   paging: {
     next: string | null;
     previous: string | null;
@@ -34,30 +31,24 @@ interface ProgramResponse {
 
 export const getProgramList = async (honoreeId: number): Promise<ProgramResponse | null> => {
   try {
-    const token = await ensureValidToken();
-    if (!token) {
-      throw new Error("Authentication failed: No valid token.");
-    }
     const url = `${PROGRAM_ENDPOINT}?honoreeId=${honoreeId}`;
 
-
-    const response = await fetch(url, {
+    const response = await apiFetch(url, {
       method: "GET",
-      headers: {  
-        "Accept": "application/json",  
+      headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
+      },
     });
 
     if (!response.ok) {
       throw new Error(`API request failed with status ${response.status}`);
     }
 
-    const responseData: ProgramResponse = await response.json();
-    // console.log("Programs fetched successfully:", responseData);
-    return responseData;
-    
+    const data: ProgramResponse = await response.json();
+    console.log("Programs fetched successfully:", data);
+    return data;
+
   } catch (error) {
     console.error("Error fetching Programs:", error);
     return null;

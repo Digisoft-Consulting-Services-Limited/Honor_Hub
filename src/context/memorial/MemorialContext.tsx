@@ -2,7 +2,7 @@
 'use client';
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { useCallback } from 'react';
 import { getHonoreeList } from '../../services/Memorial/Honoree';
@@ -36,7 +36,8 @@ const MemorialContext = createContext<MemorialContextType | undefined>(undefined
 
 
 export const MemorialProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const { slug } = useParams();
+  const params = useParams<{ slug?: string | string[] }>();
+  const slug = Array.isArray(params?.slug) ? params.slug[0] : params?.slug;
 
   const [activeButton, setActiveButton] = useState("LIFE");
   const [isMobileView, setIsMobileView] = useState(false);

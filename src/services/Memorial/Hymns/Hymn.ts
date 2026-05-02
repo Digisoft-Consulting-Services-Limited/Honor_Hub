@@ -1,9 +1,8 @@
-import { env } from "@/utils/env.config"
-import { ensureValidToken } from "../../Auth/GuestUserAuth";
+import { apiFetch } from "../../../lib/apiFetch";
 
-const BASE_URL = env.BASE_URL;
-const BASE_URL_VERSION = env.BASE_URL_VERSION;
-const HYMNS_ENDPOINT =  `${BASE_URL}/${BASE_URL_VERSION}/honoreeSong/honoreesSongsByHonoreeId`;
+const BASE_URL = process.env.BASE_URL;
+const BASE_URL_VERSION = process.env.BASE_URL_VERSION;
+const HYMNS_ENDPOINT = `${BASE_URL}/${BASE_URL_VERSION}/honoreeSong/honoreesSongsByHonoreeId`;
 
 export interface Hymn {
   honoreeSongId: number;
@@ -17,14 +16,12 @@ export interface Hymn {
   commands: null;
 }
 
-
 interface HymnResponse {
   status: {
     code: string;
     message: string;
   };
   data: Hymn[];
-
   paging: {
     next: string | null;
     previous: string | null;
@@ -34,30 +31,24 @@ interface HymnResponse {
 
 export const getHymnList = async (honoreeId: number): Promise<HymnResponse | null> => {
   try {
-    const token = await ensureValidToken();
-    if (!token) {
-      throw new Error("Authentication failed: No valid token.");
-    }
     const url = `${HYMNS_ENDPOINT}?honoreeId=${honoreeId}`;
 
-
-    const response = await fetch(url, {
+    const response = await apiFetch(url, {
       method: "GET",
-      headers: {  
-        "Accept": "application/json",  
+      headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
+      },
     });
 
     if (!response.ok) {
       throw new Error(`API request failed with status ${response.status}`);
     }
 
-    const responseData: HymnResponse = await response.json();
-    // console.log("Hymns fetched successfully:", responseData);
-    return responseData;
-    
+    const data: HymnResponse = await response.json();
+    console.log("Hymns fetched successfully:", data);
+    return data;
+
   } catch (error) {
     console.error("Error fetching hymns:", error);
     return null;

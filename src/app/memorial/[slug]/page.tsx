@@ -1,3 +1,5 @@
+'use client';
+
 // Memorial.tsx
 import { useMemorial } from '@/context/memorial/MemorialContext';
 import Middle_Navbar from '@/components/Memorial/MiddleNavbar/MiddleNavbar';
@@ -91,7 +93,6 @@ const Memorial: React.FC = () => {
 
 
 export default Memorial
-
 
 
 

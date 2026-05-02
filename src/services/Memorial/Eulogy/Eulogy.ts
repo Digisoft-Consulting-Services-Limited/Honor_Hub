@@ -1,11 +1,7 @@
-import { env } from "@/utils/env.config";
-import { ensureValidToken } from "../../Auth/GuestUserAuth";
+import { apiFetch } from "../../../lib/apiFetch";
 
-
-
-
-const BASE_URL = env.BASE_URL;
-const BASE_URL_VERSION = env.BASE_URL_VERSION;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const BASE_URL_VERSION = process.env.NEXT_PUBLIC_BASE_URL_VERSION;
 const EULOGY_ENDPOINT = `${BASE_URL}/${BASE_URL_VERSION}/eulogy/eulogyByHonoreeId`;
 
 export interface Eulogy {
@@ -37,18 +33,13 @@ export const getEulogyList = async (
   honoreeId: number
 ): Promise<EulogyResponse | null> => {
   try {
-    const token = await ensureValidToken();
-    if (!token) {
-      throw new Error("Authentication failed: No valid token.");
-    }
-
     const url = `${EULOGY_ENDPOINT}?honoreeId=${honoreeId}`;
-    const response = await fetch(url, {
+
+    const response = await apiFetch(url, {
       method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -56,12 +47,11 @@ export const getEulogyList = async (
       throw new Error(`API request failed with status ${response.status}`);
     }
 
-    const responseData: EulogyResponse = await response.json();
-    // console.log("Eulogy data fetched successfully:", responseData);
-    return responseData;
+    const data: EulogyResponse = await response.json();
+    console.log("Eulogy data fetched successfully:", data);
+    return data;
   } catch (error) {
     console.error("Error fetching eulogy data:", error);
     return null;
   }
 };
-

@@ -1,3 +1,5 @@
+import { Providers } from './providers';
+
 export default function RootLayout({
   children,
 }: {
@@ -17,18 +19,7 @@ export default function RootLayout({
     <title>Honor Hub</title>
   </head>
   <body>
-    <div id="root">{children}</div>
-    {/* <script src="/config.js"></script> */}
-    {/* <!-- Google tag (gtag.js) --> */}
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WBE627EB0J"></script>
-<script>
-  {/* window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-WBE627EB0J'); */}
-</script>
-    <script type="module" src="/src/main.tsx"></script>
+    <Providers>{children}</Providers>
   </body>
 </html>
   )

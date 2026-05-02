@@ -2,8 +2,8 @@
 import { apiFetch } from "../../lib/apiFetch";
 
 
-const BASE_URL = process.env.BASE_URL
-const BASE_URL_VERSION = process.env.BASE_URL_VERSION
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
+const BASE_URL_VERSION = process.env.NEXT_PUBLIC_BASE_URL_VERSION
 const HONOREE_ENDPOINT =  `${BASE_URL}/${BASE_URL_VERSION}/honoree/honorees`;
 interface Honoree {
     honoreeId: number;
@@ -26,20 +26,14 @@ interface Honoree {
     itemsCount: number;
   }
 
-export const getHonoreeList = async ():Promise<HonoreeResponse | null> => {
+export const getHonoreeList = async (): Promise<HonoreeResponse | null> => {
     try {
-        const token = await apiFetch(HONOREE_ENDPOINT, { method: "GET" });
-        if (!token) {
-            throw new Error("Authentication failed: No valid token.");
-        }
-
-        const response = await fetch(HONOREE_ENDPOINT, {  
+        const response = await apiFetch(HONOREE_ENDPOINT, {
             method: "GET",
-            headers: {  
-                "Accept": "application/json",  
+            headers: {
+                "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
+            },
         });
 
         if (!response.ok) {
@@ -47,9 +41,8 @@ export const getHonoreeList = async ():Promise<HonoreeResponse | null> => {
         }
 
         const data: HonoreeResponse = await response.json();
-        // console.log("Honoree details fetched successfully:", data);
+        console.log("Honoree details fetched successfully:", data);
         return data;
-        
     } catch (error) {
         console.error("Error fetching honoree details:", error);
         return null;
