@@ -18,7 +18,7 @@ export default function RootLayout({
   </head>
   <body>
     <div id="root">{children}</div>
-    <script src="/config.js"></script>
+    {/* <script src="/config.js"></script> */}
     {/* <!-- Google tag (gtag.js) --> */}
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WBE627EB0J"></script>
 <script>

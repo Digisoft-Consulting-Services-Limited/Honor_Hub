@@ -1,20 +1,16 @@
+'use client';
 import { motion } from "framer-motion";
 import Footer from "../../components/global/footer";
-import Homepage_Navbar from "@/components/home/homepage_navbar";
-import { useNavigate } from "react-router-dom";
-import { useMemorial, Honoree } from '@/context/memorial/MemorialContext';
+import Homepage_Navbar from "../../components/home/homepage_navbar";
+import { useRouter } from "next/navigation";
+import { useMemorial, Honoree } from '../../context/memorial/MemorialContext';
 
 
 const HomePage: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const { memorials, isLoading } = useMemorial(); // Get memorials from context
   const handleMemorialClick = (memorial:Honoree) => {
-    navigate(`/memorial/${memorial.slug}`,{ 
-      state: { slug: memorial.slug ,
-        honoreeId: memorial.honoreeId
-
-      }
-    }); // Navigate to the memorial page
+    navigate.push(`/memorial/${memorial.slug}?honoreeId=${memorial.honoreeId}`); // Navigate to the memorial page
   };
 
 

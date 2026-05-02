@@ -1,3 +1,4 @@
+'use client';
 import { HeartIcon } from "@heroicons/react/24/outline";
 import Footer from "../components/global/footer";
 import { useRouter } from "next/navigation";

@@ -1,10 +1,11 @@
 // contexts/MemorialContext.tsx
+'use client';
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useCallback } from 'react';
-import { getHonoreeList } from '@/services/Memorial/Honoree';
+import { getHonoreeList } from '../../services/Memorial/Honoree';
 export interface Honoree {
   title: string;
   fullName: string;

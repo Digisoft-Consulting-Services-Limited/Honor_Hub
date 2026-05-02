@@ -1,9 +1,9 @@
-import { env } from "@/utils/env.config";
-import { ensureValidToken } from "../Auth/GuestUserAuth";
+
+import { apiFetch } from "../../lib/apiFetch";
 
 
-const BASE_URL = env.BASE_URL
-const BASE_URL_VERSION = env.BASE_URL_VERSION
+const BASE_URL = process.env.BASE_URL
+const BASE_URL_VERSION = process.env.BASE_URL_VERSION
 const HONOREE_ENDPOINT =  `${BASE_URL}/${BASE_URL_VERSION}/honoree/honorees`;
 interface Honoree {
     honoreeId: number;
@@ -28,7 +28,7 @@ interface Honoree {
 
 export const getHonoreeList = async ():Promise<HonoreeResponse | null> => {
     try {
-        const token = await ensureValidToken();
+        const token = await apiFetch(HONOREE_ENDPOINT, { method: "GET" });
         if (!token) {
             throw new Error("Authentication failed: No valid token.");
         }

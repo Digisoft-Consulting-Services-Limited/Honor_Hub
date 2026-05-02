@@ -1,3 +1,4 @@
+'use client';
 import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket, faAngleDown, faFireFlameSimple } from "@fortawesome/free-solid-svg-icons";
