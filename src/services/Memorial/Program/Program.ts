@@ -1,7 +1,7 @@
 import { apiFetch } from "../../../lib/apiFetch";
 
-const BASE_URL = process.env.BASE_URL;
-const BASE_URL_VERSION = process.env.BASE_URL_VERSION;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const BASE_URL_VERSION = process.env.NEXT_PUBLIC_BASE_URL_VERSION;
 const PROGRAM_ENDPOINT = `${BASE_URL}/${BASE_URL_VERSION}/honoreeProgram/honoreesProgramByHonoreeId`;
 
 export interface Program {

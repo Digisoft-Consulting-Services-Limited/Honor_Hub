@@ -1,9 +1,9 @@
 import { apiFetch } from "../../../lib/apiFetch";
 
-const BASE_URL = process.env.BASE_URL;
-const BASE_URL_VERSION = process.env.BASE_URL_VERSION;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const BASE_URL_VERSION = process.env.NEXT_PUBLIC_BASE_URL_VERSION;
 const TRIBUTE_ENDPOINT = `${BASE_URL}/${BASE_URL_VERSION}/tribute/tributesByHonoreeId`;
-
+console.log("Base URL:", BASE_URL)
 export interface Tribute {
   tributeId: number;
   honoreeId: number;
