@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Memorial from "../pages/MemorialPage";
+import Memorial from "../views/MemorialPage";
 import { MemorialProvider } from "@/context/memorial/MemorialContext";
 import MemorialForm from "@/components/Memorial/forms/Memorial_form";
 

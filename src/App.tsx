@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MemorialRoute from './routes/MemorialRoute';
 import PagesRoute from './routes/PageRoute';
 import AuthRoutes from './routes/AuthRoutes';
-import { NotFoundPage } from './pages/NotFound';
+import { NotFoundPage } from './views/NotFound';
 // import { AuthProvider } from '@/context/auth/authcontext';
 import { useEffect } from 'react';
 import { setupAutoRefresh } from '@/services/Auth/GuestUserAuth';

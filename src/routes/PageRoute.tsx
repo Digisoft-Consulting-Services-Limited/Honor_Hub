@@ -1,7 +1,7 @@
 import {  Routes, Route } from 'react-router-dom'
-// import LandingPage from '../pages/homepage'
-import LandingPage from '../pages/LandingPage'
-import HomePage from '../pages/HomePage';
+// import LandingPage from '../views/homepage'
+import LandingPage from '../views/LandingPage'
+import HomePage from '../views/HomePage';
 import { MemorialProvider } from "@/context/memorial/MemorialContext";
 
 

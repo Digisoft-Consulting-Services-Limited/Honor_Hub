@@ -1,3 +1,5 @@
+'use client';
+
 export const NotFoundPage = () => {
   return (
     <main className="min-h-screen bg-primary-light px-4 py-16 text-primary-text_black">
@@ -29,3 +31,5 @@ export const NotFoundPage = () => {
     </main>
   );
 };
+
+export default NotFoundPage;
