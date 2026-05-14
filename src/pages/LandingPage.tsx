@@ -1,12 +1,12 @@
 import { HeartIcon } from "@heroicons/react/24/outline";
 import Footer from "@/components/global/footer";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { easeOut } from "framer-motion";
 
 
 export default function LandingPage() {
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   const textVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -83,7 +83,7 @@ export default function LandingPage() {
                 variants={textVariants}
                 className="bg-primary border-4 border-primary-hover_light text-white px-6 py-2 sm:px-8 sm:py-3 rounded-lg hover:bg-primary-hover_light hover:text-black transition-colors text-sm sm:text-base"
                 onClick={() => {
-                  navigate('/home');
+                  navigate.push('/home');
                 }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

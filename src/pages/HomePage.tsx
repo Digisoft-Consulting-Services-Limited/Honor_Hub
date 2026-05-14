@@ -1,20 +1,15 @@
 import { motion } from "framer-motion";
 import Footer from "@/components/global/footer";
 import Homepage_Navbar from "@/components/home/homepage_navbar";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { useMemorial, Honoree } from '@/context/memorial/MemorialContext';
 
 
 const HomePage: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const { memorials, isLoading } = useMemorial(); // Get memorials from context
   const handleMemorialClick = (memorial:Honoree) => {
-    navigate(`/memorial/${memorial.slug}`,{ 
-      state: { slug: memorial.slug ,
-        honoreeId: memorial.honoreeId
-
-      }
-    }); // Navigate to the memorial page
+    navigate.push(`/memorial/${memorial.slug}?honoreeId=${memorial.honoreeId}`); // Navigate to the memorial page
   };
 
 
@@ -44,7 +39,7 @@ const HomePage: React.FC = () => {
               className="bg-primary border-4 border-primary-hover_light text-white px-6 py-2 sm:px-8 sm:py-3 rounded-md hover:bg-primary-hover_light hover:text-black transition-colors text-sm sm:text-base"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => navigate("/memorial/create")}
+              onClick={() => navigate.push("/memorial/create")}
             >
               Create Memorial
             </motion.button>

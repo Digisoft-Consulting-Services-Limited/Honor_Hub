@@ -11,7 +11,7 @@ import MemorialProgram from '@/components/Memorial/Sections/Program/MemorialProg
 import Hymns from '@/components/Memorial/Sections/Hymns/Hymns';
 // import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-// import { NotFoundPage } from './NotFound';
+import { NotFoundPage } from './NotFound';
 import Footer from '@/components/global/footer';
 
 
@@ -50,7 +50,7 @@ const Memorial: React.FC = () => {
   if (!currentMemorial) return (
     
 
-    // <NotFoundPage />
+    <NotFoundPage />
   );
 
 
