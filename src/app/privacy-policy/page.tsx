@@ -41,13 +41,7 @@ const sections = [
     ],
   },
   {
-    title: '7. Third-Party Links',
-    body: [
-      'HonorHub may contain links to third-party websites or services. This Privacy Policy does not apply to those third parties, and we are not responsible for their privacy practices.',
-    ],
-  },
-  {
-    title: '8. Changes to This Policy',
+    title: '7. Changes to This Policy',
     body: [
       'We may update this Privacy Policy from time to time. If we make significant changes, we may notify users through the Service or by other reasonable means.',
     ],
