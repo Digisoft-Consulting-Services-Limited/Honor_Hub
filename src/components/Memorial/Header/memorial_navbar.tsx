@@ -165,10 +165,10 @@ const NavbarSidebar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
           <div className="border-t border-[#704f3a] mt-4 pt-4">
             <ul>
               <li className="hover:bg-primary-hover_light p-2 cursor-pointer">
-                Terms of Use
+                <a href="/terms-of-service" className="block">Terms of Service</a>
               </li>
               <li className="hover:bg-primary-hover_light p-2 cursor-pointer">
-                Privacy Policy
+                <a href="/privacy-policy" className="block">Privacy Policy</a>
               </li>
             </ul>
           </div>
@@ -192,4 +192,3 @@ const NavbarSidebar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
 };
 
 export default NavbarSidebar;
-

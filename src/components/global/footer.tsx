@@ -21,8 +21,8 @@ const Footer = () => {
   <div className="text-center sm:text-left">
     <h4 className="text-lg font-semibold mb-3 sm:mb-4">Legal</h4>
     <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
-      <li><a href="#" className="hover:text-black block">Privacy Policy</a></li>
-      <li><a href="#" className="hover:text-black block">Terms of Service</a></li>
+      <li><a href="/privacy-policy" className="hover:text-black block">Privacy Policy</a></li>
+      <li><a href="/terms-of-service" className="hover:text-black block">Terms of Service</a></li>
     </ul>
   </div>
 
@@ -36,7 +36,7 @@ const Footer = () => {
 
 <div className="border-t border-b border-primary-text_black mt-6 sm:mt-8 p-6 sm:pt-8 text-center text-xs  sm:text-sm">
 <p className="text-white-600 text-sm">
-  © {new Date().getFullYear()} HonorHub. All rights reserved. Made with ❤️ by{" "}
+  © {new Date().getFullYear()} HonorHub. All rights reserved.Built by{" "}
   <a
     href="https://salome-githinji.vercel.app/"
     className="text-blue-400 hover:text-blue-500 hover:underline transition duration-300 text-bold"
