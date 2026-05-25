@@ -40,12 +40,12 @@ const Homepage_Navbar: React.FC<AccountImageProps> = ({ name, imageUrl }) => {
   return (
     <div className="relative z-50">
       <nav className="bg-primary text-primary-light shadow-md">
-        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Link href="/home" className="flex items-center gap-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-light_yellow text-primary">
-              <Flame className="h-6 w-6" />
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-3 sm:h-20 sm:px-6">
+          <Link href="/home" className="flex min-w-0 items-center gap-2 sm:gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-light_yellow text-primary sm:h-11 sm:w-11">
+              <Flame className="h-5 w-5 sm:h-6 sm:w-6" />
             </span>
-            <span className="text-xl font-bold text-primary-light_yellow">HonorHub</span>
+            <span className="truncate text-lg font-bold text-primary-light_yellow sm:text-xl">HonorHub</span>
           </Link>
 
           <button
@@ -109,14 +109,14 @@ const Homepage_Navbar: React.FC<AccountImageProps> = ({ name, imageUrl }) => {
 
       <div
         ref={sidebarRef}
-        className={`fixed left-0 top-0 z-50 h-full w-72 bg-primary-light_yellow text-primary shadow-lg transition-transform duration-300 ${
+        className={`fixed left-0 top-0 z-50 h-dvh w-[min(18rem,88vw)] overflow-y-auto bg-primary-light_yellow text-primary shadow-lg transition-transform duration-300 ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex items-center justify-between bg-primary p-4 text-primary-light">
-          <div className="flex items-center gap-3">
-            <img src={imageUrl} alt={`${name || 'Guest'} profile`} className="h-11 w-11 rounded-full object-cover" />
-            <div>
+        <div className="flex items-center justify-between gap-3 bg-primary p-4 text-primary-light">
+          <div className="flex min-w-0 items-center gap-3">
+            <img src={imageUrl} alt={`${name || 'Guest'} profile`} className="h-11 w-11 shrink-0 rounded-full object-cover" />
+            <div className="min-w-0">
               <p className="font-semibold">Hello, {name || 'Guest'}</p>
               <p className="text-xs text-primary-hover_light">Welcome</p>
             </div>

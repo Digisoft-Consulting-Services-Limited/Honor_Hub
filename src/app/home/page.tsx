@@ -40,7 +40,7 @@ const HomePage: React.FC = () => {
               className="bg-primary border-4 border-primary-hover_light text-white px-6 py-2 sm:px-8 sm:py-3 rounded-md hover:bg-primary-hover_light hover:text-black transition-colors text-sm sm:text-base"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => navigate("/memorial/create")}
+              onClick={() => navigate.push("/memorial/create")}
             >
               Create Memorial
             </motion.button>

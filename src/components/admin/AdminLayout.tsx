@@ -7,7 +7,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="min-h-screen bg-primary-light text-primary-text_black">
       <AdminNavbar />
-      <main className="mx-auto grid max-w-6xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[250px_1fr]">
+      <main className="mx-auto grid max-w-6xl gap-6 px-3 py-6 sm:px-6 sm:py-8 lg:grid-cols-[250px_1fr]">
         <AdminSidebar />
         <section>
           <AdminTopBar />

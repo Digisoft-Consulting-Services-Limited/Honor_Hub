@@ -31,7 +31,7 @@ export default function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="h-fit rounded-lg border border-primary-hover_light bg-primary-light_yellow p-3 shadow-sm">
+    <aside className="hidden h-fit rounded-lg border border-primary-hover_light bg-primary-light_yellow p-3 shadow-sm lg:block">
       <p className="mb-3 border-b border-primary-hover_light pb-3 text-sm font-semibold text-primary">
         Memorial Admin
       </p>
