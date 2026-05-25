@@ -1,190 +1,188 @@
 'use client';
-import { useState, useRef, useEffect } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightFromBracket, faAngleDown, faFireFlameSimple } from "@fortawesome/free-solid-svg-icons";
-// import { useNavigate } from "react-router-dom";
-import { useRouter } from 'next/navigation';
 
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
+import { ChevronDown, Flame, LogOut, Menu, UserRound, X } from 'lucide-react';
 
 interface AccountImageProps {
   name: string;
   imageUrl: string;
 }
-const Homepage_Navbar: React.FC <AccountImageProps>= ({name,imageUrl}) => {
-  const navigate = useRouter();
 
+const accountLinks = [
+  { href: '/account/my-memorials', label: 'My Memorials' },
+  { href: '/account/account-information', label: 'Account Information' },
+];
+
+const Homepage_Navbar: React.FC<AccountImageProps> = ({ name, imageUrl }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const sidebarRef = useRef<HTMLDivElement>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  
-  // Close sidebar when clicking outside
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        sidebarRef.current &&
-        !sidebarRef.current.contains(event.target as Node)
-      ) {
+      const target = event.target as Node;
+
+      if (sidebarRef.current && !sidebarRef.current.contains(target)) {
         setIsSidebarOpen(false);
       }
+
+      if (dropdownRef.current && !dropdownRef.current.contains(target)) {
+        setIsDropdownOpen(false);
+      }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   return (
-    <div className="relative">
-      {/* Navbar */}
-      <nav className="bg-primary text-primary-light flex items-center justify-between px-4 py-3 shadow-md">
-  {/* Logo */}
-  <h1 className="text-xl  pl-9 font-bold" onClick={() => navigate.push('/home')}
-  >
-    <span><FontAwesomeIcon icon={faFireFlameSimple} /> </span>
-    <span className="text-primary-light_yellow">HonorHub</span>
-  </h1>
-  
+    <div className="relative z-50">
+      <nav className="bg-primary text-primary-light shadow-md">
+        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4 sm:px-6">
+          <Link href="/home" className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-light_yellow text-primary">
+              <Flame className="h-6 w-6" />
+            </span>
+            <span className="text-xl font-bold text-primary-light_yellow">HonorHub</span>
+          </Link>
 
-  {/* Hamburger button for mobile */}
-  <button
-    className="flex flex-col gap-1.5 md:hidden"
-    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-  >
-    <span className="w-6 h-1 bg-white rounded-sm"></span>
-    <span className="w-6 h-1 bg-white rounded-sm"></span>
-    <span className="w-6 h-1 bg-white rounded-sm"></span>
-  </button>
+          <button
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-primary-light hover:bg-primary-hover_light hover:text-primary md:hidden"
+            onClick={() => setIsSidebarOpen(true)}
+            type="button"
+            aria-label="Open menu"
+          >
+            <Menu className="h-6 w-6" />
+          </button>
 
-  {/* Right-aligned navigation links */}
-  <div className="hidden md:flex items-center gap-6 pr-6"> {/* Hidden on mobile */}
-    <ul className="flex space-x-6">
-    <li
-  className="hover:underline cursor-pointer  transition duration-300"
->
-  <a href="mailto:sallygithinji72@gmail.com">Contact Support</a>
-</li>    </ul>
+          <div className="hidden items-center gap-6 md:flex">
+            <a
+              href="mailto:sallygithinji72@gmail.com"
+              className="text-sm font-medium text-primary-light hover:text-primary-hover_light"
+            >
+              Contact Support
+            </a>
 
-    {/* Dropdown for Hello, User */}
-    <div className="relative" ref={dropdownRef}>
-      <div className="flex items-center gap-2">
-        <button
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className="flex items-center gap-2 focus:outline-none transition pr-2hover:underline hover:decoration-primary-light_yellow cursor-pointer"
-        >
-          <FontAwesomeIcon className="" icon={faAngleDown} />
-          <span className="hover:underline hover:decoration-primary-light_yellow">Hello, Guest</span>
-        </button>
-      </div>
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setIsDropdownOpen((current) => !current)}
+                className="flex items-center gap-2 rounded-md px-2 py-2 text-sm font-medium text-primary-light hover:bg-primary-hover_light hover:text-primary"
+                type="button"
+              >
+                <UserRound className="h-5 w-5" />
+                <span>Hello, {name || 'Guest'}</span>
+                <ChevronDown className="h-4 w-4" />
+              </button>
 
-      {/* Dropdown menu */}
-      {isDropdownOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-primary-light_yellow text-black rounded shadow-lg z-50">
-          <ul className="py-1 text-sm">
-            <li className="px-4 py-2 hover:bg-primary-hover_light cursor-pointer">
-              My Memorials
-            </li>
-         
-            <li className="px-4 py-2 hover:bg-primary-hover_light cursor-pointer">
-              Account Information
-            </li>
-            <li className="px-4 py-2 hover:bg-primary-hover_light cursor-pointer border-t">
-              Sign Out
-            </li>
-          </ul>
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-56 overflow-hidden rounded-md bg-primary-light_yellow text-primary shadow-lg">
+                  <ul className="py-1 text-sm">
+                    {accountLinks.map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          className="block px-4 py-2 hover:bg-primary-hover_light"
+                          onClick={() => setIsDropdownOpen(false)}
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                    <li className="border-t border-primary-hover_light">
+                      <button
+                        className="flex w-full items-center gap-2 px-4 py-2 text-left hover:bg-primary-hover_light"
+                        type="button"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Sign Out
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      )}
-    </div>
-  </div>
-</nav>
+      </nav>
 
-
-
-
-      {/* Sidebar */}
       <div
         ref={sidebarRef}
-        className={`fixed top-0 left-0 h-full w-64 bg-primary-light_yellow text-primary shadow-md transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } transition-transform duration-300 z-50`}
+        className={`fixed left-0 top-0 z-50 h-full w-72 bg-primary-light_yellow text-primary shadow-lg transition-transform duration-300 ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
       >
-        <div className="p-4 bg-primary flex items-center space-x-4">
-          <div>
-          <img
-        src={imageUrl}
-        alt={`${name}'s Profile`}
-        className=" object-cover rounded-full h-20"
-        />
+        <div className="flex items-center justify-between bg-primary p-4 text-primary-light">
+          <div className="flex items-center gap-3">
+            <img src={imageUrl} alt={`${name || 'Guest'} profile`} className="h-11 w-11 rounded-full object-cover" />
+            <div>
+              <p className="font-semibold">Hello, {name || 'Guest'}</p>
+              <p className="text-xs text-primary-hover_light">Welcome</p>
+            </div>
           </div>
-          <div className="text-primary-light">
-
-          <h3 className="text-lg font-semibold">Guest</h3>
-          <p className="text-sm">Welcome</p>
-          </div>
+          <button
+            className="rounded-md p-2 hover:bg-primary-hover_light hover:text-primary"
+            onClick={() => setIsSidebarOpen(false)}
+            type="button"
+            aria-label="Close menu"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
-        {/* Scrollable Content */}
-        <div className="p-4 space-y-4 overflow-y-auto h-[calc(100%-4rem)]">
-          <ul className="space-y-4">
-            <li className="hover:bg-primary-hover_light  p-2 rounded cursor-pointer">
-              My Memorials
-            </li>
-           
-            {/* <li className="hover:bg-primary-hover_light p-2 rounded cursor-pointer">
-              Create a New Website
-            </li> */}
-            
-            <li
-  className="hover:bg-primary-hover_light p-2 rounded  cursor-pointer  "
->
-  <a href="mailto:sallygithinji72@gmail.com">Contact Support</a>
-</li>
 
-          </ul>
-          <div className="border-t border-[#704f3a] mt-4 pt-4">
-            <h4 className="text-md font-bold mb-2">My Account</h4>
-            <ul>
-              <li className="hover:bg-primary-hover_light p-2 rounded cursor-pointer">
-                Account Information
-              </li>
+        <div className="space-y-5 p-4">
+          <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-primary-text_black/60">
+              My Account
+            </p>
+            <ul className="space-y-1">
+              {accountLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="block rounded-md px-3 py-2 text-sm hover:bg-primary-hover_light"
+                    onClick={() => setIsSidebarOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
-          <div className="border-t border-[#704f3a] mt-4 pt-4">
-            <h4 className="text-md font-bold mb-2">Learn More</h4>
-            <ul className="space-y-4">
-              <li className="hover:bg-primary-hover_light p-2 rounded cursor-pointer">
-                About HonorHub Memorials
-              </li>
-              <li className="hover:bg-primary-hover_light p-2 rounded cursor-pointer">
-                Plans & Features
-              </li>
-              <li className="hover:bg-primary-hover_light p-2 rounded cursor-pointer">
-                Testimonials
-              </li>
-            </ul>
-          </div>
-          <div className="border-t border-[#704f3a] mt-4 pt-4">
-            <ul>
-              <li className="hover:bg-primary-hover_light p-2 cursor-pointer">
-                <a href="/terms-of-service" className="block">Terms of Service</a>
-              </li>
-              <li className="hover:bg-primary-hover_light p-2 cursor-pointer">
-                <a href="/privacy-policy" className="block">Privacy Policy</a>
-              </li>
-            </ul>
-          </div>
-          <div className="border-t border-[#704f3a] mt-4 pt-4">
-            <li className="hover:bg-primary-hover_light p-2 cursor-pointer">
-              <FontAwesomeIcon icon={faArrowRightFromBracket} /> Sign Out 
-            </li>
+
+          <div className="border-t border-primary-hover_light pt-4">
+            <a
+              href="mailto:sallygithinji72@gmail.com"
+              className="block rounded-md px-3 py-2 text-sm hover:bg-primary-hover_light"
+            >
+              Contact Support
+            </a>
+            <Link
+              href="/terms-of-service"
+              className="block rounded-md px-3 py-2 text-sm hover:bg-primary-hover_light"
+              onClick={() => setIsSidebarOpen(false)}
+            >
+              Terms of Service
+            </Link>
+            <Link
+              href="/privacy-policy"
+              className="block rounded-md px-3 py-2 text-sm hover:bg-primary-hover_light"
+              onClick={() => setIsSidebarOpen(false)}
+            >
+              Privacy Policy
+            </Link>
           </div>
         </div>
       </div>
 
-      {/* Overlay */}
       {isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
+        <button
+          className="fixed inset-0 z-40 bg-black/40"
           onClick={() => setIsSidebarOpen(false)}
-        ></div>
+          type="button"
+          aria-label="Close menu overlay"
+        />
       )}
     </div>
   );
